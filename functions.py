@@ -1,6 +1,5 @@
-%matplotlib inline
 import numpy as np
-import matplotlib.pyplot as plt #for plot
+import matplotlib.pyplot as plt 
 
 def batch_iter(y, tx, batch_size, num_batches=1, shuffle=True):
     """
@@ -113,5 +112,31 @@ def ridge_regression(y, tx, lambda_):
     w= np.linalg.solve(a, b)
     return w, compute_loss(y, tx, w)
 
-def logistic_regression(y, tx, initial_w, max_iters, gamma)
-def reg_logistic_regression(y, tx, lambda_, initial_w, max_iters, gamma)
+def split_data(x, y, ids, ratio, seed=1):
+    """
+        split the dataset based on the split ratio. If ratio is 0.8
+        you will have 80% of your data set dedicated to training
+        and the rest dedicated to testing
+        """
+    # set seed
+    np.random.seed(seed)
+    # ***************************************************
+    # INSERT YOUR CODE HERE
+    # split the data based on the given ratio: TODO
+    # ***************************************************
+    num = len(y)
+    order = np.random.permutation(num)
+    order_1 = order[:int(np.floor(ratio*num))]
+    order_2 = order[int(np.floor(ratio*num)):num]
+    x_train = x[order_1]
+    y_train = y[order_1]
+    ids_train = ids[order_1]
+    x_test = x[order_2]
+    y_test = y[order_2]
+    ids_test = ids[order_2]
+    return x_train, x_test, y_train, y_test, ids_train, ids_test
+
+def logistic_regression(y, tx, initial_w, max_iters, gamma):
+    return 0
+def reg_logistic_regression(y, tx, lambda_, initial_w, max_iters, gamma):
+    return 0
