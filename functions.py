@@ -39,8 +39,10 @@ def compute_loss(y, tx, w):
     # ***************************************************
     # compute loss by MSE
     # ***************************************************
-    MSE = np.sum(np.power((y - np.dot(tx, w)), 2))/(2*len(y))
-    return MSE
+
+    e = y - tx.dot(w)
+
+    return 1/2*np.mean(e**2)
 
 def compute_gradient(y, tx, w):
     # ***************************************************
@@ -70,27 +72,30 @@ def least_squares_GD(y, tx, initial_w, max_iters, gamma):
         # store w and loss
         ws.append(w)
         losses.append(loss)
-        print("Gradient Descent({bi}/{ti}): loss={l}, w0={w0}, w1={w1}".format(
-              bi=n_iter, ti=max_iters - 1, l=loss, w0=w[0], w1=w[1]))
-
     return ws[-1], losses[-1]
 
 def least_squares_SGD(y, tx, initial_w, max_iters, gamma):
-    """Stochastic gradient descent algorithm."""
+    """Stochastic gradient descent algorithm.fdsaf"""
     # ***************************************************
     # Implement stochastic gradient descent.
-    # ***************************************************
-    losses = []
+    # **************************************************
     batch_size = 1
     ws = [initial_w]
+    losses = []
     w = initial_w
-    for item in range(max_iters):
-        for minibatch_y, minibatch_tx in batch_iter(y, tx, batch_size):
-            loss = compute_loss(minibatch_y, minibatch_tx, w)
-            gradient = compute_gradient(minibatch_y, minibatch_tx, w)
-            w = w - gamma*gradient
+    
+    for n_iter in range(max_iters):
+        for y_batch, tx_batch in batch_iter(y, tx, batch_size=batch_size, num_batches=1):
+            # compute a stochastic gradient and loss
+            grad = compute_gradient(y_batch, tx_batch, w)
+            # update w through the stochastic gradient update
+            w = w - gamma * grad
+            # calculate loss
+            loss = compute_loss(y, tx, w)
+            # store w and loss
             ws.append(w)
             losses.append(loss)
+
     return ws[-1], losses[-1]
 
 def least_squares(y, tx):
