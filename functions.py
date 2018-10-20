@@ -31,18 +31,24 @@ def sigmoid(t):
 	t = np.divide(1, 1+np.exp((-1)*t))
 	return t
 
-def compute_loss(y, tx, w):
-    """Calculate the loss.
+def compute_loss(y, tx, w, loss_function='mse'):
+    """
+    Calculate the loss.
     y: weight
     tx: 1+height
     """
-    # ***************************************************
-    # compute loss by MSE
-    # ***************************************************
-
-    e = y - tx.dot(w)
-
-    return 1/2*np.mean(e**2)
+    if loss_function == 'mse': # Mean square error
+        e = y - tx.dot(w)
+        return 1/2*np.mean(e ** 2)
+   
+    elif loss_function == 'rmse': # Square root of MSE
+        e = y - tx.dot(w)
+        return np.sqrt(1/2 * np.mean(e ** 2))
+   
+    else: # Mean Absolute Error
+        e = y - tx.dot(w)
+        return 1/2 * np.mean(np.abs(e))
+    
 
 def compute_gradient(y, tx, w):
     # ***************************************************
@@ -72,14 +78,17 @@ def least_squares_GD(y, tx, initial_w, max_iters, gamma):
         # store w and loss
         ws.append(w)
         losses.append(loss)
+        
+        print(ws, losses)
+        
     return ws[-1], losses[-1]
 
-def least_squares_SGD(y, tx, initial_w, max_iters, gamma):
+def least_squares_SGD(y, tx, initial_w, max_iters, gamma, loss_function='mse'):
     """Stochastic gradient descent algorithm.fdsaf"""
     # ***************************************************
     # Implement stochastic gradient descent.
     # **************************************************
-    batch_size = 1
+    batch_size = 10
     ws = [initial_w]
     losses = []
     w = initial_w
@@ -91,10 +100,12 @@ def least_squares_SGD(y, tx, initial_w, max_iters, gamma):
             # update w through the stochastic gradient update
             w = w - gamma * grad
             # calculate loss
-            loss = compute_loss(y, tx, w)
+            loss = compute_loss(y, tx, w, loss_function=loss_function)
             # store w and loss
             ws.append(w)
             losses.append(loss)
+            
+            print('Loss: {}, iteration: {}'.format(loss, n_iter))
 
     return ws[-1], losses[-1]
 
