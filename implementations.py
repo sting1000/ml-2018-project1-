@@ -1,10 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt 
 
-def calculate_predicted_labels(x, w):
+def calculate_predicted_labels(x, w, val=0):
     y_pred = x.dot(w)
-    y_pred[np.where(y_pred <= 0)] = -1
-    y_pred[np.where(y_pred > 0)] = 1
+    y_pred[np.where(y_pred <= val)] = -1
+    y_pred[np.where(y_pred > val)] = 1
     
     return y_pred
 
@@ -75,11 +75,10 @@ def batch_iter(y, tx, batch_size, num_batches=1, shuffle=True):
             yield shuffled_y[start_index:end_index], shuffled_tx[start_index:end_index]
 
 def sigmoid(t):
-	"""
+    """
         Compute the sigmoid funtion to implement logistic regression
     """
-	t = np.divide(1, 1+np.exp((-1)*t))
-	return t
+    return 1 / (1 + np.exp(-t))
 
 def compute_loss(y, tx, w, loss_function='mse'):
     """
@@ -277,6 +276,18 @@ def build_model_data(x, y):
     return tx, y
 
 def logistic_regression(y, tx, max_iters, gamma):
+    """
+    Implementing logistic regression algorithm.
+
+
+    :param: tx: input data which is standardized and cleaned.
+    :param: y: labels for the dataset
+    :param: max_iters: times which the algorithm needs to be run.
+    :param: gamma: the learning rate value.
+        
+    output: weight, loss
+    """
+
     initial_w = np.zeros(tx.shape[1])
     divide_by_constant = 1 / y.shape[0]
     
@@ -294,12 +305,47 @@ def logistic_regression(y, tx, max_iters, gamma):
         )
     return initial_w, loss
         
-def calculate_loss_logistic(h, y):
+def reg_logistic_regression(y, tx, lambda_, max_iters, gamma):
+    """
+    Implementing logistic regression algorithm.
+
+
+    :param: tx: input data which is standardized and cleaned.
+    :param: y: labels for the dataset
+    :param: max_iters: times which the algorithm needs to be run.
+    :param: gamma: the learning rate value.
+        
+    output: weight, loss
+    """
+
+    initial_w = np.zeros(tx.shape[1])
+    divide_by_constant = 1 / y.shape[0]
+    
+    for n_iter in range(max_iters):
+        h = sigmoid(np.dot(initial_w, tx.T))
+        constant = lambda_ / y.shape[0]
+        gradient = (divide_by_constant * np.dot(tx.T, (h - y))) + (constant * initial_w)
+        initial_w -= gamma * gradient
+        
+        loss = calculate_loss_logistic(
+            h, y, initial_w, lambda_=lambda_, regularize=True
+        )
+
+        print(
+            'Loss (regularization) calculated at: {} , training step: {}'.format(
+                 loss, n_iter
+            )
+        )
+    return initial_w, loss
+
+def calculate_loss_logistic(h, y, w, lambda_=0, regularize=False):
     """
     Given the actual label y and calculated hypothesis h returns the loss
     accumulated over all data points.
     """
-    return (-y * np.log(h) - (1 - y) * np.log(1 - h)).mean()
-        
-def reg_logistic_regression(y, tx, lambda_, max_iters, gamma):
-    return 0
+    loss = (-y * np.log(h) - (1 - y) * np.log(1 - h)).mean()
+    if not regularize:
+        return loss
+    else: # lambda_/ 2 * number of features by the sum of dot product
+        constant = (lambda_ / ((2 * y.shape[0])))
+        return loss + (constant * np.dot(w, w))
