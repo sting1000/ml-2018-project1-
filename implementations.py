@@ -276,7 +276,30 @@ def build_model_data(x, y):
     tx = np.c_[np.ones(num_samples), x]
     return tx, y
 
-def logistic_regression(y, tx, initial_w, max_iters, gamma):
-    return 0
-def reg_logistic_regression(y, tx, lambda_, initial_w, max_iters, gamma):
+def logistic_regression(y, tx, max_iters, gamma):
+    initial_w = np.zeros(tx.shape[1])
+    divide_by_constant = 1 / y.shape[0]
+    
+    for n_iter in range(max_iters):
+        h = sigmoid(np.dot(initial_w, tx.T))
+        gradient = divide_by_constant * np.dot(tx.T, (h - y))
+        initial_w -= gamma * gradient
+        
+        loss = calculate_loss_logistic(h, y)
+
+        print(
+            'Loss calculated at: {} , training step: {}'.format(
+                 loss, n_iter
+            )
+        )
+    return initial_w, loss
+        
+def calculate_loss_logistic(h, y):
+    """
+    Given the actual label y and calculated hypothesis h returns the loss
+    accumulated over all data points.
+    """
+    return (-y * np.log(h) - (1 - y) * np.log(1 - h)).mean()
+        
+def reg_logistic_regression(y, tx, lambda_, max_iters, gamma):
     return 0
