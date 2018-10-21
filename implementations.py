@@ -245,6 +245,37 @@ def split_data(x, y, ratio, seed=1):
     #ids_test = ids[order_2]
     return x_train, x_test, y_train, y_test
 
+def cross_validation(x, y, k=10, seed=1):
+    """
+    Split the data into k sets where k-1 sets is used for training
+    and the kth set is used for testing.
+
+    :param: x: input data
+    :param: y: testing labels
+    :param: k: parameter as to how many splits should be made
+    """
+    np.random.seed(seed)
+
+    # Get the shuffled order of indices randomly
+    shuffled_order = np.random.permutation(len(y))
+    shuffled_x = x[shuffled_order]
+    shuffled_y = y[shuffled_order]
+
+    # Divide the input data and labels into k sets
+    n = int(len(y) / k)
+    x_k_sets = [x[i:i+n] for i in range(0, len(x), n)] 
+    y_k_sets = [y[i:i+n] for i in range(0, len(y), n)]
+
+    # For each value of k get the kth set and 
+    for j in range(k):
+        x_test, y_test = x_k_sets[j], y_k_sets[j]
+        x_train = x_k_sets[np.arange(len(x_k_sets)) != j]
+        y_train = y_k_sets[np.arange(len(y_k_sets)) != j]
+        yield x_test, y_test, x_train, y_train
+
+    # TODO: Right now just splits the dataset need to follow up
+    # with a conceptual question
+
 def standardize(x):
     """
         Standardize the original data set.
