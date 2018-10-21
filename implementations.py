@@ -264,18 +264,15 @@ def cross_validation(x, y, k=10, seed=1):
 
     # Divide the input data and labels into k sets
     n = int(len(y) / k)
-    x_k_sets = [x[i:i+n] for i in range(0, len(x), n)] 
-    y_k_sets = [y[i:i+n] for i in range(0, len(y), n)]
+    x_k_sets = np.array([x[i:i+n] for i in range(0, len(x), n)])
+    y_k_sets = np.array([y[i:i+n] for i in range(0, len(y), n)])
 
     # For each value of k get the kth set and 
     for j in range(k):
         x_test, y_test = x_k_sets[j], y_k_sets[j]
-        x_train = x_k_sets[np.arange(len(x_k_sets)) != j]
-        y_train = y_k_sets[np.arange(len(y_k_sets)) != j]
-        yield x_test, y_test, x_train, y_train
-
-    # TODO: Right now just splits the dataset need to follow up
-    # with a conceptual question
+        o = np.arange(len(x_k_sets)) != j
+        x_train, y_train = np.vstack(x_k_sets[o]), np.hstack(y_k_sets[o])
+        yield x_train, y_train, x_test, y_test
 
 def standardize(x):
     """
@@ -307,7 +304,7 @@ def build_model_data(x, y):
     tx = np.c_[np.ones(num_samples), x]
     return tx, y
 
-def logistic_regression(y, tx, max_iters, gamma):
+def logistic_regression(y, tx, max_iters, gamma, initial_w):
     """
     Implementing logistic regression algorithm.
 
@@ -319,8 +316,6 @@ def logistic_regression(y, tx, max_iters, gamma):
         
     output: weight, loss
     """
-
-    initial_w = np.zeros(tx.shape[1])
     divide_by_constant = 1 / y.shape[0]
     
     for n_iter in range(max_iters):
@@ -328,7 +323,7 @@ def logistic_regression(y, tx, max_iters, gamma):
         gradient = divide_by_constant * np.dot(tx.T, (h - y))
         initial_w -= gamma * gradient
         
-        loss = calculate_loss_logistic(h, y)
+        loss = calculate_loss_logistic(h, y, initial_w)
 
         print(
             'Loss calculated at: {} , training step: {}'.format(
@@ -337,7 +332,7 @@ def logistic_regression(y, tx, max_iters, gamma):
         )
     return initial_w, loss
         
-def reg_logistic_regression(y, tx, lambda_, max_iters, gamma):
+def reg_logistic_regression(y, tx, lambda_, max_iters, gamma, initial_w):
     """
     Implementing logistic regression algorithm.
 
@@ -349,8 +344,6 @@ def reg_logistic_regression(y, tx, lambda_, max_iters, gamma):
         
     output: weight, loss
     """
-
-    initial_w = np.zeros(tx.shape[1])
     divide_by_constant = 1 / y.shape[0]
     
     for n_iter in range(max_iters):
