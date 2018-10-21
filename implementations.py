@@ -1,4 +1,5 @@
 import numpy as np
+import itertools as it
 import matplotlib.pyplot as plt 
 
 def calculate_predicted_labels(x, w, val=0):
@@ -380,3 +381,57 @@ def calculate_loss_logistic(h, y, w, lambda_=0, regularize=False):
     else: # lambda_/ 2 * number of features by the sum of dot product
         constant = (lambda_ / ((2 * y.shape[0])))
         return loss + (constant * np.dot(w, w))
+
+def replace_nan(column, missing_value, strategy='mean'):
+    """
+        to replace given missing value by a particular number
+        
+        Input:
+        column: a column with missing value    shape in[height, 1]
+        missing_value: the value you what to replace
+        strategy: a str to tell the replacement method: 'mean' 'median'
+        Output:
+        column_: a column after replacing
+        """
+    if strategy == 'mean':
+        replacement = np.mean(column[column!=missing_value])
+    else:
+        replacement = np.median(column[column!=missing_value])
+    column[column==missing_value] = replacement
+    return column
+
+def build_combination(x, size):
+    """
+        to generate new feature columns using combination method
+        
+        Input:
+        x: the feature data set
+        size: many columns should combine as a new column.
+        
+        Output:
+        x_: new matrix with combination columns (C(x.shape[1])(size))
+        """
+    x_ = x
+    index = np.array(range(x.shape[1]))
+    combs = list(it.combinations(index, size))
+    for comb in combs:
+        product = 1
+        for item in comb:
+            product *=  x[:, item]
+        #product = product.reshape(x.shape[0], 1)
+        x_ = np.c_[x_, product]
+    return x_
+
+def build_log(x):
+    """
+        to generate new feature columns log x
+        
+        Input:
+        x: the feature data set
+        
+        Output:
+        x_: new matrix with log columns
+        """
+    x_ = x
+    x_ = np.c_[x_, np.log(x)]
+    return x_
