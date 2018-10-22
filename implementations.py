@@ -8,12 +8,13 @@ def calculate_predicted_labels(x, w, val=0, do_sigmoid=False):
     else:
         y_pred = sigmoid(x.dot(w))
 
-    y_pred[np.where(y_pred < val)] = 0
-    y_pred[np.where(y_pred >= val)] = 1
+    y_pred[np.where(y_pred <= val)] = -1
+    y_pred[np.where(y_pred > val)] = 1
     
     return y_pred
 
 def print_accuracy(predict_labels, x, y, train=True):
+    y[y == 0] = -1
     total_correct_labels = np.sum(predict_labels == y)
     print('Total correct labels in training: {}'.format(total_correct_labels))
     if train:
