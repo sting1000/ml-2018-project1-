@@ -2,8 +2,12 @@ import numpy as np
 import itertools as it
 import matplotlib.pyplot as plt 
 
-def calculate_predicted_labels(x, w, val=0):
-    y_pred = x.dot(w)
+def calculate_predicted_labels(x, w, val=0, do_sigmoid=False):
+    if not do_sigmoid:
+        y_pred = x.dot(w)
+    else:
+        y_pred = sigmoid(x.dot(w))
+
     y_pred[np.where(y_pred <= val)] = -1
     y_pred[np.where(y_pred > val)] = 1
     
@@ -373,7 +377,7 @@ def calculate_loss_logistic(h, y, w, lambda_=0, regularize=False):
         return loss
     else: # lambda_/ 2 * number of features by the sum of dot product
         constant = (lambda_ / ((2 * y.shape[0])))
-        return loss + (constant * np.dot(w, w))
+        return loss + (constant * np.linalg.norm(w))
 
 def replace_nan(column, missing_value, strategy='mean'):
     """
@@ -406,11 +410,8 @@ def build_combination(x, size):
         """
     x_ = x
     index = np.array(range(x.shape[1]))
-    combs = list(it.combinations(index, size))
-    for comb in combs:
-        product = 1
-        for item in comb:
-            product *=  x[:, item]
+    for comb in it.combinations(index, size):
+        product = np.prod(x[:, comb], axis=1)
         #product = product.reshape(x.shape[0], 1)
         x_ = np.c_[x_, product]
     return x_
