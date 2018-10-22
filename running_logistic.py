@@ -25,17 +25,22 @@ x_ = build_poly(x, degree)
 # x_ = build_combination(x_, 2)
 
 
-def run_logistic_regression(x_train, y_train, x_test, y_test, initial_w):
+def run_logistic_regression(x_train, y_train, x_test, y_test, initial_w, regularize=False):
     ## Logistic Regression ##
-    max_iters_logistic = 100
-    lr = 0.01
-    w, loss = logistic_regression(y_train, x_train, max_iters_logistic, lr, initial_w)
+    max_iters_logistic = 500
+    lr = 0.1
+    lambda_ = 5
 
-    # ## Calculate the number of right labels for training and testing ##
+    if not regularize:
+        w, loss = logistic_regression(y_train, x_train, max_iters_logistic, lr, initial_w)
+    else:
+        w, loss = reg_logistic_regression(y_train, x_train, lambda_, max_iters_logistic, lr, initial_w)    
+
+    ## Calculate the number of right labels for training and testing ##
     training_predict_labels = calculate_predicted_labels(x_train, w, val=0.5, do_sigmoid=True)
     testing_predict_labels = calculate_predicted_labels(x_test, w, val=0.5, do_sigmoid=True)
 
-    # ## Print the logs of the final results ##
+    ## Print the logs of the final results ##
     print_accuracy(training_predict_labels, x_train, y_train)
     print_accuracy(testing_predict_labels, x_test, y_test, train=False)
 
@@ -69,7 +74,7 @@ else:
             )
         )
 
-        weights, loss = run_logistic_regression(x_train, y_train, x_test, y_test, initial_w)
+        weights, loss = run_logistic_regression(x_train, y_train, x_test, y_test, initial_w, regularize=False)
 
         # Update variables for next iteration
         cross_val_weights.append(weights)
