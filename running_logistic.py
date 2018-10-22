@@ -7,7 +7,7 @@ y, x, ids = load_csv_data("train.csv")
 ## Remove columns which have high correlation - refer from notebook ##
 # Delete these features since they are correlated with DER_deltaeta_jet_jet and have cyclic correlation
 # DER_lep_eta_centrality, DER_prodeta_jet_jet, PRI_jet_subleading_eta, PRI_jet_subleading_phi, PRI_jet_subleading_pt
-for i in [6,11,24,24,24]:
+for i in [6, 11, 24, 24, 24]:
     x = np.delete(x, i, 1)
 
 
@@ -22,13 +22,13 @@ degree = 1
 
 ## Feature Engineering ##
 x_ = build_poly(x, degree)
-x_ = build_combination(x_, 2)
+# x_ = build_combination(x_, 2)
 
 
 def run_logistic_regression(x_train, y_train, x_test, y_test, initial_w):
     ## Logistic Regression ##
     max_iters_logistic = 100
-    lr = 0.001
+    lr = 0.01
     w, loss = logistic_regression(y_train, x_train, max_iters_logistic, lr, initial_w)
 
     # ## Calculate the number of right labels for training and testing ##

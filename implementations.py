@@ -8,8 +8,8 @@ def calculate_predicted_labels(x, w, val=0, do_sigmoid=False):
     else:
         y_pred = sigmoid(x.dot(w))
 
-    y_pred[np.where(y_pred <= val)] = -1
-    y_pred[np.where(y_pred > val)] = 1
+    y_pred[np.where(y_pred < val)] = -1
+    y_pred[np.where(y_pred >= val)] = 1
     
     return y_pred
 
@@ -320,15 +320,13 @@ def logistic_regression(y, tx, max_iters, gamma, initial_w):
         
     output: weight, loss
     """
-    divide_by_constant = 1 / y.shape[0]
-    
     for n_iter in range(max_iters):
-        h = sigmoid(np.dot(initial_w, tx.T))
-        gradient = divide_by_constant * np.dot(tx.T, (h - y))
-        initial_w -= gamma * gradient
-        
-        loss = calculate_loss_logistic(h, y, initial_w)
+        h = np.dot(tx.T, y) * initial_w
+        gradient = ((sigmoid(h) - 1) * np.dot(tx.T, y))
+        gradient /= y.shape[0]
+        initial_w -= (gamma * gradient)
 
+        loss = calculate_loss_logistic(tx, y, initial_w)
         print(
             'Loss calculated at: {} , training step: {}'.format(
                  loss, n_iter
@@ -348,16 +346,15 @@ def reg_logistic_regression(y, tx, lambda_, max_iters, gamma, initial_w):
         
     output: weight, loss
     """
-    divide_by_constant = 1 / y.shape[0]
-    
     for n_iter in range(max_iters):
-        h = sigmoid(np.dot(initial_w, tx.T))
+        h = np.dot(initial_w, tx.T) * y
         constant = lambda_ / y.shape[0]
-        gradient = (divide_by_constant * np.dot(tx.T, (h - y))) + (constant * initial_w)
+        gradient = ((sigmoid(h) - 1) * np.dot(tx.T, y) + (constant * initial_w))
+        gradient /= tx.shape[0]
         initial_w -= gamma * gradient
         
         loss = calculate_loss_logistic(
-            h, y, initial_w, lambda_=lambda_, regularize=True
+            tx, y, initial_w, lambda_=lambda_, regularize=True
         )
 
         print(
@@ -367,12 +364,12 @@ def reg_logistic_regression(y, tx, lambda_, max_iters, gamma, initial_w):
         )
     return initial_w, loss
 
-def calculate_loss_logistic(h, y, w, lambda_=0, regularize=False):
+def calculate_loss_logistic(tx, y, w, lambda_=0, regularize=False):
     """
     Given the actual label y and calculated hypothesis h returns the loss
     accumulated over all data points.
-    """
-    loss = (-y * np.log(h) - (1 - y) * np.log(1 - h)).mean()
+    """x
+    loss = np.log(1 + np.exp(-y * np.dot(tx, w))).mean()
     if not regularize:
         return loss
     else: # lambda_/ 2 * number of features by the sum of dot product
