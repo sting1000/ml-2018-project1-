@@ -16,7 +16,7 @@ def calculate_predicted_labels(x, w, val=0, do_sigmoid=False):
 def print_accuracy(predict_labels, y, train=True):
     y[y == 0] = -1
     total_correct_labels = np.sum(predict_labels == y)
-    print('Total correct labels in training: {}'.format(total_correct_labels))
+
     if train:
         print('Training accuracy: {}'.format((total_correct_labels / len(y)) * 100))
     else:
@@ -84,8 +84,9 @@ def batch_iter(y, tx, batch_size, num_batches=1, shuffle=True):
 def sigmoid(t):
     """
         Compute the sigmoid funtion to implement logistic regression
+        Using stable version of the sigmoid function as in to avoid the overflow.
     """
-    return 1 / (1 + np.exp(-t))
+    return (1 / (1 + np.exp(-t)))
 
 def compute_loss(y, tx, w, loss_function='mse'):
     """
@@ -254,26 +255,19 @@ def split_data(x, y, ratio, seed=1):
 
 def build_k_indices(y, k_fold, seed):
     """build k indices for k-fold."""
+
+    np.random.seed(seed)
+
     num_row = y.shape[0]
     interval = int(num_row / k_fold)
-    np.random.seed(seed)
     indices = np.random.permutation(num_row)
-    k_indices = [indices[k * interval: (k + 1) * interval]
-                 for k in range(k_fold)]
-    return np.array(k_indices)
+    return np.array([indices[k * interval: (k + 1) * interval]
+                 for k in range(k_fold)])
 
-def cross_validation2(y, x, k_indices, k, gamma, max_iters ):
+def cross_validation2(y, x, k_indices, k):#, gamma, max_iters ):
     """return the loss of ridge regression."""
     x_train = []
     y_train = []
-
-    # You can initialize the weights to zeros since for sigmoid they
-    # round of to 0.5 but we can initialize the weights to the normal
-    # distribution. since it is a convex problem it would still evaluate 
-    # fine but the idea behind weight initialization other than zero
-    # is to give it a head start.
-
-    initial_w = np.random.randn(x.shape[1])
     x_test = x[k_indices[k,:]]
     y_test = y[k_indices[k,:]]
     for it in range(k_indices.shape[0]):
@@ -281,36 +275,7 @@ def cross_validation2(y, x, k_indices, k, gamma, max_iters ):
             x_train.extend(x[k_indices[it, :]])
             y_train.extend(y[k_indices[it, :]])
 
-    w, loss = logistic_regression(np.array(y_train), np.array(x_train), max_iters, gamma, initial_w)
-    return w, loss
-
-def cross_validation(x, y, k=10, seed=1):
-    """
-    Split the data into k sets where k-1 sets is used for training
-    and the kth set is used for testing.
-
-    :param: x: input data
-    :param: y: testing labels
-    :param: k: parameter as to how many splits should be made
-    """
-    np.random.seed(seed)
-
-    # Get the shuffled order of indices randomly
-    shuffled_order = np.random.permutation(len(y))
-    shuffled_x = x[shuffled_order]
-    shuffled_y = y[shuffled_order]
-
-    # Divide the input data and labels into k sets
-    n = int(len(y) / k)
-    x_k_sets = np.array([shuffled_x[i:i+n] for i in range(0, len(x), n)])
-    y_k_sets = np.array([shuffled_y[i:i+n] for i in range(0, len(y), n)])
-
-    # For each value of k get the kth set and 
-    for j in range(k):
-        x_test, y_test = x_k_sets[j], y_k_sets[j]
-        o = np.arange(len(x_k_sets)) != j
-        x_train, y_train = np.vstack(x_k_sets[o]), np.hstack(y_k_sets[o])
-        yield x_train, y_train, x_test, y_test
+    return np.array(x_train), np.array(y_train), x_test, y_test
 
 def standardize(x):
     """

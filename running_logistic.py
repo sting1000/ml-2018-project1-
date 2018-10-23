@@ -54,6 +54,8 @@ for cate_num in range(4):
 #####################
 right_pred_num = 0
 total_pred_num = 0
+category_weights = []
+
 for cate_num in range(4):
     x = x_cate[cate_num]
     #Parameters
@@ -62,7 +64,7 @@ for cate_num in range(4):
     ### combination size
     comb_size = 1
     ### K fold validation
-    k_fold = 5
+    k_fold = 10
     ### step size
     gamma = 0.1
     ###random seed
@@ -85,57 +87,48 @@ for cate_num in range(4):
     x_ = build_poly(x, poly_degree)
     x_ = build_combination(x_, comb_size)
 
-    cross_val_losses = []
+    # cross_val_losses = []
     cross_val_weights = []
 
+    split_data = False
     # Split the dataset for cross validation and testing
-    x_train, x_test, y_train, y_test = split_data(x_, y_cate[cate_num], 0.9)
+    if split_data:
+        x_train, x_test, y_train, y_test = split_data(x_, y_cate[cate_num], 0.9)
+    else:
+        x_train, y_train = x_, y_cate[cate_num]
+
 
     k_indices = build_k_indices(y_train, k_fold, seed)
-    loss_tr_sum = 0.
+    loss_tr_sum = 0
     right_pred_fold = 0
 
     for k in range(k_fold):
-        w, loss = cross_validation2(y_train, x_train, k_indices, k, gamma, max_iters)
+        initial_w = np.random.randn(x_train.shape[1])
+
+        # Cross validated training set
+        x_t, y_t, x_te, y_te = cross_validation2(y_train, x_train, k_indices, k)
+
+        # Pass in cross validated
+        w, loss = logistic_regression(y_t, x_t, max_iters, gamma, initial_w)
         loss_tr_sum += loss
 
-        testing_predict_labels = calculate_predicted_labels(x_test, w, val=0.5, do_sigmoid=True)
-        right_pred_fold += print_accuracy(testing_predict_labels, y_test, train=False)
-        #accuarcy = 100 * print_accuracy(testing_predict_labels, y_test, train=False)/len(y_test)
-        #print('The Accuarcy of fold {} in category {} is {}'.format(k, cate_num, accuarcy))
-    print("The Average loss of train set: ", loss_tr_sum/k_fold)
+        testing_predict_labels = calculate_predicted_labels(x_te, w, val=0.5, do_sigmoid=True)
+        right_pred_fold += print_accuracy(testing_predict_labels, y_te, train=True)
 
-    print("The Average accuarcy of test set in category {} is {}: ".format(cate_num, 100*right_pred_fold/(len(y_test)*k_fold), '%'))
-    print('########################################################')
-    right_pred_num += int(right_pred_fold/ k_fold)
-    total_pred_num += len(y_test)
-print("Overall Accuarcy: ", 100*right_pred_num/total_pred_num,'%')
+        cross_val_weights.append(w)
 
-#     iter_n = 1
-#     for x_train, y_train, x_test, y_test in cross_validation(x_train, y_train, k= k):
-#         print(x_train[1])
-#         initial_w = np.zeros(x_train.shape[1])
-#         weights, loss = run_logistic_regression(x_train, y_train, x_test, y_test, initial_w, regularize=False)
-#         # Update variables for next iteration
-#         cross_val_weights.append(weights)
-#         cross_val_losses.append(loss)
-#         print(
-#             'Iteration: {} The size of training data: {}'
-#             '\nThe size of testing data: {}'.format(
-#                 iter_n, x_train.shape, x_test.shape
-#             ))
-#         print('###############################################')
-#         iter_n += 1
-#     # print('Weights over 10 cross validation cycles: {}'.format(cross_val_weights))
-#     print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-#     mean_of_weights = np.mean(np.array(cross_val_weights), axis=0)
-#     print('Mean of weights: {} and shape: {}'.format(mean_of_weights, mean_of_weights.shape))
-#     print('Losses over 10 cross validation cycles: {}'.format(cross_val_losses))
+    print("The Average loss of train set: {}".format(loss_tr_sum/k_fold))
+    print("The Average accuarcy of test set in category {} is {}.".format(
+        cate_num, 100 * right_pred_fold / (len(y_te) * k_fold), '%')
+    )
+    print('Training for CATEGORY DONE: ########################################################')
 
-#     testing_predict_labels = calculate_predicted_labels(x_test, mean_of_weights, val=0.5, do_sigmoid=True)
-#     right_pred_num += print_accuracy(testing_predict_labels, y_test, train=False)
-#     total_pred_num += len(y_test)
-#     w_cate[cate_num] = mean_of_weights
-#     y_pred[cate_num] = testing_predict_labels
-#     print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-# print(100*right_pred_num/total_pred_num,'%')
+    mean_of_weights = np.mean(cross_val_weights, axis=0)
+    # Add the weight for this category
+    category_weights.append(mean_of_weights)
+
+    # testing_predict_labels = calculate_predicted_labels(x_test, mean_of_weights, val=0.5, do_sigmoid=True)
+    # total_correct_testing_labels = print_accuracy(testing_predict_labels, y_test, train=False)
+    # print('The total accuracy of testing data: {}'.format(100 * (total_correct_testing_labels / len(y_test))))
+
+    print('################################################################')
