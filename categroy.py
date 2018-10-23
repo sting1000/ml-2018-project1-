@@ -1,11 +1,15 @@
+from proj1_helpers import *
+from implementations import *
+import numpy as np
+
 def load_categrized_data(data_name):
     """
-    load csv data and categorize it with ??? and return with x_cate, y_cate, ids_cate
+    load csv data and categorize it with tag number. Standardize and return with x_cate, y_cate, ids_cate
     
     input:
         data_name   -the csv file name in the current dirctory
     output:
-        x_cate, y_cate, ids_cate    -with four dimension
+        x_cate, y_cate, ids_cate, total_num    -with four dimension
     """
     y, x, ids = load_csv_data(data_name)
     x[:, 0] = replace_nan(x[:, 0], -999)
@@ -34,4 +38,5 @@ def load_categrized_data(data_name):
                 x_cate[it] = np.delete(x_cate[it], column, 1)
                 column -= 1
             column+= 1
-    return x_cate, y_cate, ids_cate
+        x_cate[it], _, _ = standardize(x_cate[it])
+    return x_cate, y_cate, ids_cate, len(y)

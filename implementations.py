@@ -13,15 +13,15 @@ def calculate_predicted_labels(x, w, val=0, do_sigmoid=False):
     
     return y_pred
 
-def print_accuracy(predict_labels, x, y, train=True):
+def print_accuracy(predict_labels, y, train=True):
     y[y == 0] = -1
     total_correct_labels = np.sum(predict_labels == y)
     print('Total correct labels in training: {}'.format(total_correct_labels))
     if train:
-        print('Training accuracy: {}'.format((total_correct_labels / x.shape[0]) * 100))
+        print('Training accuracy: {}'.format((total_correct_labels / len(y)) * 100))
     else:
-        print('Testing accuracy: {}'.format((total_correct_labels / x.shape[0]) * 100))
-
+        print('Testing accuracy: {}'.format((total_correct_labels / len(y)) * 100))
+    return total_correct_labels
 def predic(n):
     """
         use tanh to get the label(-1/1) of predic result n
@@ -251,6 +251,32 @@ def split_data(x, y, ratio, seed=1):
     #ids_test = ids[order_2]
     return x_train, x_test, y_train, y_test
 
+def build_k_indices(y, k_fold, seed):
+    """build k indices for k-fold."""
+    num_row = y.shape[0]
+    interval = int(num_row / k_fold)
+    np.random.seed(seed)
+    indices = np.random.permutation(num_row)
+    k_indices = [indices[k * interval: (k + 1) * interval]
+                 for k in range(k_fold)]
+    return np.array(k_indices)
+
+def cross_validation2(y, x, k_indices, k, gamma, max_iters ):
+    """return the loss of ridge regression."""
+    x_train = []
+    y_train = []
+    initial_w = np.zeros(x.shape[1])
+    x_test = x[k_indices[k,:]]
+    y_test = y[k_indices[k,:]]
+    for it in range(k_indices.shape[0]):
+        if it!= k:
+            x_train.extend(x[k_indices[it, :]])
+            y_train.extend(y[k_indices[it, :]])
+
+    w, loss_tr = logistic_regression(np.array(y_train), np.array(x_train), max_iters, gamma, initial_w)
+    loss_te = 0#calculate_loss_logistic(np.array(x_test), np.array(y_test), w)
+    return w, loss_tr, loss_te 
+
 def cross_validation(x, y, k=10, seed=1):
     """
     Split the data into k sets where k-1 sets is used for training
@@ -269,8 +295,8 @@ def cross_validation(x, y, k=10, seed=1):
 
     # Divide the input data and labels into k sets
     n = int(len(y) / k)
-    x_k_sets = np.array([x[i:i+n] for i in range(0, len(x), n)])
-    y_k_sets = np.array([y[i:i+n] for i in range(0, len(y), n)])
+    x_k_sets = np.array([shuffled_x[i:i+n] for i in range(0, len(x), n)])
+    y_k_sets = np.array([shuffled_y[i:i+n] for i in range(0, len(y), n)])
 
     # For each value of k get the kth set and 
     for j in range(k):
@@ -321,6 +347,7 @@ def logistic_regression(y, tx, max_iters, gamma, initial_w):
         
     output: weight, loss
     """
+
     for n_iter in range(max_iters):
         # h = np.dot(tx.T, y) * initial_w
         # gradient = ((sigmoid(h) - 1) * np.dot(y, tx))
@@ -329,13 +356,14 @@ def logistic_regression(y, tx, max_iters, gamma, initial_w):
         gradient = np.dot(tx.T, (h - y))
         gradient /= tx.shape[0]
         initial_w -= (gamma * gradient)
-
         loss = calculate_loss_logistic(h, y, initial_w)
-        print(
-            'Loss calculated at: {} , training step: {}'.format(
-                 loss, n_iter
+        if (n_iter%100==0):
+            #print(initial_w)
+            print(
+                'Loss calculated at: {} , training step: {}'.format(
+                     loss, n_iter
+                )
             )
-        )
     return initial_w, loss
         
 def reg_logistic_regression(y, tx, lambda_, max_iters, gamma, initial_w):
@@ -410,7 +438,9 @@ def build_combination(x, size):
         
         Output:
         x_: new matrix with combination columns (C(x.shape[1])(size))
-        """
+    """
+    if size == 1 :
+        return x
     x_ = x
     index = np.array(range(x.shape[1]))
     for comb in it.combinations(index, size):
