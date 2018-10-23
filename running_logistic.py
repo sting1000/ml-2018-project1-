@@ -24,6 +24,12 @@ def run_logistic_regression(x_train, y_train, x_test, y_test, initial_w, regular
     return w, loss
 
 
+c_parameters = dict()
+##------------------poly_deg----comb_size----K_fold----step_size----random_seed----iteration----d
+c_parameters[0] = [   3,          1,         10,         0.1,          1,             1300]
+c_parameters[1] = [   2,          2,         10,         0.1,          1,             1800]
+c_parameters[2] = [   3,          1,         10,         0.1,          1,             1800]
+c_parameters[3] = [   2,          2,         10,         0.1,          1,             1800]
 
 ## Load data ##
 x_cate, y_cate, ids_cate, total_num = load_categrized_data("train.csv")
@@ -56,21 +62,9 @@ right_pred_num = 0
 total_pred_num = 0
 category_weights = []
 
-for cate_num in range(4):
-    x = x_cate[cate_num]
-    #Parameters
-    ### build polynomial by degree
-    poly_degree = 2
-    ### combination size
-    comb_size = 1
-    ### K fold validation
-    k_fold = 10
-    ### step size
-    gamma = 0.1
-    ###random seed
-    seed = 1
-    ###iteration
-    max_iters = 500
+for cate_num in c_parameters:
+    
+    poly_degree, comb_size, k_fold, gamma, seed, max_iters = c_parameters[cate_num]
 ## Split data or do cross validation ##
 # do_split_data = False
 
@@ -82,9 +76,8 @@ for cate_num in range(4):
 #     print('The size of training data: {}\nThe size of training data: {}'.format( x_train.shape, x_test.shape))
 #     run_logistic_regression(x_train, y_train, x_test, y_test)
 # else:
-    
     ## Feature Engineering ##
-    x_ = build_poly(x, poly_degree)
+    x_ = build_poly(x_cate[cate_num], poly_degree)
     x_ = build_combination(x_, comb_size)
 
     # cross_val_losses = []
