@@ -87,25 +87,24 @@ for cate_num in range(4):
 
     cross_val_losses = []
     cross_val_weights = []
-    
 
     # Split the dataset for cross validation and testing
     x_train, x_test, y_train, y_test = split_data(x_, y_cate[cate_num], 0.9)
 
     k_indices = build_k_indices(y_train, k_fold, seed)
     loss_tr_sum = 0.
-    #loss_te_sum = 0.
     right_pred_fold = 0
+
     for k in range(k_fold):
-        w, loss_tr,_ = cross_validation2(y_train, x_train, k_indices, k, gamma, max_iters)
-        loss_tr_sum += loss_tr
-        #loss_te_sum += loss_te
+        w, loss = cross_validation2(y_train, x_train, k_indices, k, gamma, max_iters)
+        loss_tr_sum += loss
+
         testing_predict_labels = calculate_predicted_labels(x_test, w, val=0.5, do_sigmoid=True)
         right_pred_fold += print_accuracy(testing_predict_labels, y_test, train=False)
         #accuarcy = 100 * print_accuracy(testing_predict_labels, y_test, train=False)/len(y_test)
         #print('The Accuarcy of fold {} in category {} is {}'.format(k, cate_num, accuarcy))
     print("The Average loss of train set: ", loss_tr_sum/k_fold)
-    #print("The Average loss of test set: ", loss_te_sum/k_fold)
+
     print("The Average accuarcy of test set in category {} is {}: ".format(cate_num, 100*right_pred_fold/(len(y_test)*k_fold), '%'))
     print('########################################################')
     right_pred_num += int(right_pred_fold/ k_fold)

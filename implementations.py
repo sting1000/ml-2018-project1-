@@ -22,6 +22,7 @@ def print_accuracy(predict_labels, y, train=True):
     else:
         print('Testing accuracy: {}'.format((total_correct_labels / len(y)) * 100))
     return total_correct_labels
+
 def predic(n):
     """
         use tanh to get the label(-1/1) of predic result n
@@ -265,7 +266,14 @@ def cross_validation2(y, x, k_indices, k, gamma, max_iters ):
     """return the loss of ridge regression."""
     x_train = []
     y_train = []
-    initial_w = np.zeros(x.shape[1])
+
+    # You can initialize the weights to zeros since for sigmoid they
+    # round of to 0.5 but we can initialize the weights to the normal
+    # distribution. since it is a convex problem it would still evaluate 
+    # fine but the idea behind weight initialization other than zero
+    # is to give it a head start.
+
+    initial_w = np.random.randn(x.shape[1])
     x_test = x[k_indices[k,:]]
     y_test = y[k_indices[k,:]]
     for it in range(k_indices.shape[0]):
@@ -273,9 +281,8 @@ def cross_validation2(y, x, k_indices, k, gamma, max_iters ):
             x_train.extend(x[k_indices[it, :]])
             y_train.extend(y[k_indices[it, :]])
 
-    w, loss_tr = logistic_regression(np.array(y_train), np.array(x_train), max_iters, gamma, initial_w)
-    loss_te = 0#calculate_loss_logistic(np.array(x_test), np.array(y_test), w)
-    return w, loss_tr, loss_te 
+    w, loss = logistic_regression(np.array(y_train), np.array(x_train), max_iters, gamma, initial_w)
+    return w, loss
 
 def cross_validation(x, y, k=10, seed=1):
     """
