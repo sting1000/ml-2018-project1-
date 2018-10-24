@@ -254,8 +254,9 @@ def split_data(x, y, ratio, seed=1):
     return x_train, x_test, y_train, y_test
 
 def build_k_indices(y, k_fold, seed):
-    """build k indices for k-fold."""
-
+    """
+    Build indices for k fold cross validation.
+    """
     np.random.seed(seed)
 
     num_row = y.shape[0]
@@ -264,8 +265,10 @@ def build_k_indices(y, k_fold, seed):
     return np.array([indices[k * interval: (k + 1) * interval]
                  for k in range(k_fold)])
 
-def cross_validation2(y, x, k_indices, k):#, gamma, max_iters ):
-    """return the loss of ridge regression."""
+def cross_validation(y, x, k_indices, k):
+    """
+    Cross validation for training and testing data.
+    """
     x_train = []
     y_train = []
     x_test = x[k_indices[k,:]]
@@ -329,13 +332,18 @@ def logistic_regression(y, tx, max_iters, gamma, initial_w):
         gradient /= tx.shape[0]
         initial_w -= (gamma * gradient)
         loss = calculate_loss_logistic(h, y, initial_w)
-        if (n_iter%100==0):
+        if (n_iter % 100==0):
             #print(initial_w)
             print(
                 'Loss calculated at: {} , training step: {}'.format(
                      loss, n_iter
                 )
             )
+
+        # Learning rate decay after every 1000 iterations
+        if (n_iter % 1000 == 0):
+            gamma /= 10
+
     return initial_w, loss
         
 def reg_logistic_regression(y, tx, lambda_, max_iters, gamma, initial_w):
