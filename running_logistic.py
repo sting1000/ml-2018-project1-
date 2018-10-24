@@ -26,10 +26,10 @@ def run_logistic_regression(x_train, y_train, x_test, y_test, initial_w, regular
 
 c_parameters = dict()
 ##------------------poly_deg----comb_size----K_fold----step_size----random_seed----iteration----d
-c_parameters[0] = [   3,          1,         10,         0.1,          1,             1300]
-c_parameters[1] = [   2,          2,         10,         0.1,          1,             1800]
-c_parameters[2] = [   3,          1,         10,         0.1,          1,             1800]
-c_parameters[3] = [   2,          2,         10,         0.1,          1,             1800]
+c_parameters[0] = [   3,          1,         10,         0.1,          1,             2000]
+c_parameters[1] = [   4,          2,         10,         0.1,          1,             2800]
+c_parameters[2] = [   3,          2,         10,         0.1,          1,             2800]
+c_parameters[3] = [   4,          2,         10,         0.1,          1,             2800]
 
 ## Load data ##
 x_cate, y_cate, ids_cate, total_num = load_categrized_data("train.csv")
