@@ -369,7 +369,10 @@ def reg_logistic_regression(y, tx, lambda_, max_iters, gamma, initial_w):
     beta_two = 0.999
     epsilon = 1e-8
 
-    for n_iter in range(max_iters):
+    prev_loss = 999
+    n_iter = 1
+
+    while True:
 
         z = np.dot(initial_w, tx.T)
         h = sigmoid(z)
@@ -394,6 +397,12 @@ def reg_logistic_regression(y, tx, lambda_, max_iters, gamma, initial_w):
                      loss, n_iter
                 )
             )
+
+        if prev_loss - loss < 0.00001:
+            break
+
+        prev_loss = loss
+        n_iter += 1
 
     return initial_w, loss
 
