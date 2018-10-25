@@ -310,7 +310,7 @@ def build_model_data(x, y):
     tx = np.c_[np.ones(num_samples), x]
     return tx, y
 
-def logistic_regression(y, tx, max_iters, gamma, initial_w):
+def logistic_regression(y, tx, max_iters, gamma, initial_w, do_decay=False):
     """
     Implementing logistic regression algorithm.
 
@@ -341,8 +341,8 @@ def logistic_regression(y, tx, max_iters, gamma, initial_w):
             )
 
         # Learning rate decay after every 1000 iterations
-        if (n_iter % 1000 == 0):
-            gamma /= 10
+        if (n_iter % 2500 == 0) and do_decay:
+            gamma /= 2
 
     return initial_w, loss
         

@@ -26,10 +26,10 @@ def run_logistic_regression(x_train, y_train, x_test, y_test, initial_w, regular
 
 c_parameters = dict()
 ##------------------poly_deg----comb_size----K_fold----step_size----random_seed----iteration----
-c_parameters[0] = [   4,          1,         10,         0.1,          1,             2200]
-c_parameters[1] = [   4,          3,         10,         0.1,          1,             3200]
-c_parameters[2] = [   3,          2,         10,         0.1,          1,             3200]
-c_parameters[3] = [   4,          2,         10,         0.1,          1,             3200]
+c_parameters[0] = [   2,          1,         8,         0.1,          1,              2500, False] # 83.7%
+c_parameters[1] = [   2,          2,         8,         0.1,          1,             3500, True]
+c_parameters[2] = [   3,          2,         10,         0.1,          1,             3500, True]
+c_parameters[3] = [   4,          2,         10,         0.1,          1,             3500, True]
 
 ## Load data ##
 x_cate, y_cate, ids_cate, total_num = load_categrized_data("train.csv")
@@ -47,13 +47,7 @@ x_cate, y_cate, ids_cate, total_num = load_categrized_data("train.csv")
 
 # x, _, _ = standardize(x)
 
-#initial w_cate, y_pred
-w_cate = dict()
-y_pred = dict()
-for cate_num in range(4):
-    w_cate[cate_num] = []
-    y_pred[cate_num] = []
-
+# for cate_num in range(4):
 
 #####################
 #get prediction model
@@ -62,9 +56,11 @@ right_pred_num = 0
 total_pred_num = 0
 category_weights = []
 
-for cate_num in c_parameters:
+for cate_num in [1]:
+
+    print('Training the model for category: {}'.format(cate_num))
     
-    poly_degree, comb_size, k_fold, gamma, seed, max_iters = c_parameters[cate_num]
+    poly_degree, comb_size, k_fold, gamma, seed, max_iters, do_decay = c_parameters[cate_num]
 ## Split data or do cross validation ##
 # do_split_data = False
 
@@ -78,7 +74,10 @@ for cate_num in c_parameters:
 # else:
     ## Feature Engineering ##
     x_ = build_poly(x_cate[cate_num], poly_degree)
+    print('Build features for the poly task: {}'.format(x_.shape))
+
     x_ = build_combination(x_, comb_size)
+    print('Build features for the poly-combination task: {}'.format(x_.shape))
 
     # cross_val_losses = []
     cross_val_weights = []
@@ -102,7 +101,7 @@ for cate_num in c_parameters:
         x_t, y_t, x_te, y_te = cross_validation(y_train, x_train, k_indices, k)
 
         # Pass in cross validated
-        w, loss = logistic_regression(y_t, x_t, max_iters, gamma, initial_w)
+        w, loss = logistic_regression(y_t, x_t, max_iters, gamma, initial_w, do_decay=do_decay)
         loss_tr_sum += loss
 
         testing_predict_labels = calculate_predicted_labels(x_te, w, val=0.5, do_sigmoid=True)
