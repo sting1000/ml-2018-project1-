@@ -26,10 +26,10 @@ def run_logistic_regression(x_train, y_train, x_test, y_test, initial_w, regular
 
 c_parameters = dict()
 ##------------------poly_deg----comb_size----K_fold----step_size----random_seed----iteration----
-c_parameters[0] = [   2,          1,         8,          0.1,           1,             2500, False] # 83.75% (mean), 84.35% (max)
-c_parameters[1] = [   8,          1,         8,          0.1,           1,             3500, True]
-c_parameters[2] = [   2,          1,         10,         0.1,           1,             3500, True]
-c_parameters[3] = [   4,          2,         10,         0.1,           1,             3500, True]
+c_parameters[0] = [   2,          1,         8,          0.001,           1,             4000, False] # 83 - 84%
+c_parameters[1] = [   2,          2,         8,          0.001,           1,              4500, False]
+c_parameters[2] = [   2,          1,         10,         0.001,           1,             3500, False]
+c_parameters[3] = [   4,          2,         10,         0.001,           1,             3500, False]
 
 ## Load data ##
 x_cate, y_cate, ids_cate, total_num = load_categrized_data("train.csv")
@@ -57,11 +57,12 @@ total_pred_num = 0
 category_weights = []
 
 lambda_ = 5
-for cate_num in [0]:
+for cate_num in [1]:
 
     print('Training the model for category: {}'.format(cate_num))
     
     poly_degree, comb_size, k_fold, gamma, seed, max_iters, do_decay = c_parameters[cate_num]
+    print('This is the gamma used:'.format(gamma))
 ## Split data or do cross validation ##
 # do_split_data = False
 

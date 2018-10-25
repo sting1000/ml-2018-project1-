@@ -1,0 +1,384 @@
+Training the model for category: 1
+This is the gamma used:
+################################################################
+Build features for the poly task (train shape): (67851, 45)
+Build features for the poly task (test shape): (9693, 45)
+Build features for the poly-combination task: (67851, 45)
+Build features for the poly-combination task: (9693, 45)
+Loss (regularization) calculated at: 5.811869177928028 , training step: 0
+/Users/harshdeep/EPFL/ML/ml-2018-project1/implementations.py:89: RuntimeWarning: overflow encountered in exp
+  return (1 / (1 + np.exp(-t)))
+Loss (regularization) calculated at: 7.696047249022122 , training step: 100
+Loss (regularization) calculated at: 7.604180825938834 , training step: 200
+Loss (regularization) calculated at: 7.512104024095937 , training step: 300
+Loss (regularization) calculated at: 7.421752073377791 , training step: 400
+Loss (regularization) calculated at: 7.334087093124573 , training step: 500
+Loss (regularization) calculated at: 7.171190576794531 , training step: 600
+Loss (regularization) calculated at: 7.011502988572304 , training step: 700
+Loss (regularization) calculated at: 6.850598716793176 , training step: 800
+Loss (regularization) calculated at: 6.682877273950074 , training step: 900
+Loss (regularization) calculated at: 6.495499832207665 , training step: 1000
+Loss (regularization) calculated at: 6.151662601590972 , training step: 1100
+Loss (regularization) calculated at: 5.688278021361483 , training step: 1200
+Loss (regularization) calculated at: 5.1717305750211695 , training step: 1300
+Loss (regularization) calculated at: 4.806820019607923 , training step: 1400
+Loss (regularization) calculated at: 4.556758729829252 , training step: 1500
+Loss (regularization) calculated at: 4.276055261122098 , training step: 1600
+Loss (regularization) calculated at: 3.943834527459699 , training step: 1700
+Loss (regularization) calculated at: 3.5374403459350168 , training step: 1800
+Loss (regularization) calculated at: 3.050693533461784 , training step: 1900
+Loss (regularization) calculated at: 2.4941030122019976 , training step: 2000
+Loss (regularization) calculated at: 1.8482065454054473 , training step: 2100
+Loss (regularization) calculated at: 1.3971954369978286 , training step: 2200
+Loss (regularization) calculated at: 1.0785959584781264 , training step: 2300
+Loss (regularization) calculated at: 0.8708010633636708 , training step: 2400
+Loss (regularization) calculated at: 0.7424291835586507 , training step: 2500
+Loss (regularization) calculated at: 0.6466704305981593 , training step: 2600
+Loss (regularization) calculated at: 0.5814300882569677 , training step: 2700
+Loss (regularization) calculated at: 0.5349190393717148 , training step: 2800
+Loss (regularization) calculated at: 0.5025827854794778 , training step: 2900
+Loss (regularization) calculated at: 0.4817800471975647 , training step: 3000
+Loss (regularization) calculated at: 0.4684107821200923 , training step: 3100
+Loss (regularization) calculated at: 0.46338125222735177 , training step: 3200
+Loss (regularization) calculated at: 0.4609621094847267 , training step: 3300
+Loss (regularization) calculated at: 0.45978485206015735 , training step: 3400
+Loss (regularization) calculated at: 0.4594883565546099 , training step: 3500
+Loss (regularization) calculated at: 0.4597354802613376 , training step: 3600
+Loss (regularization) calculated at: 0.459340482829137 , training step: 3700
+Loss (regularization) calculated at: 0.45961009175355716 , training step: 3800
+Loss (regularization) calculated at: 0.45963422247888736 , training step: 3900
+Training accuracy: 78.66943744381071
+Testing accuracy: 78.35551428866192
+################################################################
+Build features for the poly task (train shape): (67851, 45)
+Build features for the poly task (test shape): (9693, 45)
+Build features for the poly-combination task: (67851, 45)
+Build features for the poly-combination task: (9693, 45)
+Loss (regularization) calculated at: 4.374303611834769 , training step: 0
+Loss (regularization) calculated at: 7.93471381560511 , training step: 100
+Loss (regularization) calculated at: 7.870139340763384 , training step: 200
+Loss (regularization) calculated at: 7.804249907810839 , training step: 300
+Loss (regularization) calculated at: 7.738600900462259 , training step: 400
+Loss (regularization) calculated at: 7.671555253960539 , training step: 500
+Loss (regularization) calculated at: 7.5475852846042 , training step: 600
+Loss (regularization) calculated at: 7.413074974666918 , training step: 700
+Loss (regularization) calculated at: 7.270225515330704 , training step: 800
+Loss (regularization) calculated at: 7.101638385573251 , training step: 900
+Loss (regularization) calculated at: 6.893517178926605 , training step: 1000
+Loss (regularization) calculated at: 6.4695939471363495 , training step: 1100
+Loss (regularization) calculated at: 5.909592152033101 , training step: 1200
+Loss (regularization) calculated at: 5.307180038914274 , training step: 1300
+Loss (regularization) calculated at: 4.881638298926302 , training step: 1400
+Loss (regularization) calculated at: 4.682181345521172 , training step: 1500
+Loss (regularization) calculated at: 4.506582539715315 , training step: 1600
+Loss (regularization) calculated at: 4.310011438990192 , training step: 1700
+Loss (regularization) calculated at: 4.077569592857235 , training step: 1800
+Loss (regularization) calculated at: 3.8382668560768827 , training step: 1900
+Loss (regularization) calculated at: 3.5869667246358055 , training step: 2000
+Loss (regularization) calculated at: 3.2575914774090613 , training step: 2100
+Loss (regularization) calculated at: 2.910238586595869 , training step: 2200
+Loss (regularization) calculated at: 2.5402383969042397 , training step: 2300
+Loss (regularization) calculated at: 2.162141207777638 , training step: 2400
+Loss (regularization) calculated at: 1.8053776616504358 , training step: 2500
+Loss (regularization) calculated at: 1.3998666534038535 , training step: 2600
+Loss (regularization) calculated at: 1.046047338569324 , training step: 2700
+Loss (regularization) calculated at: 0.7757263504697747 , training step: 2800
+Loss (regularization) calculated at: 0.611379693916033 , training step: 2900
+Loss (regularization) calculated at: 0.536128793493907 , training step: 3000
+Loss (regularization) calculated at: 0.49957065917258897 , training step: 3100
+Loss (regularization) calculated at: 0.48240888355923267 , training step: 3200
+Loss (regularization) calculated at: 0.47261376397070604 , training step: 3300
+Loss (regularization) calculated at: 0.46687117676620377 , training step: 3400
+Loss (regularization) calculated at: 0.46429331423631537 , training step: 3500
+Loss (regularization) calculated at: 0.4640016968417977 , training step: 3600
+Loss (regularization) calculated at: 0.4629523809336635 , training step: 3700
+Loss (regularization) calculated at: 0.46242421173209175 , training step: 3800
+Loss (regularization) calculated at: 0.46189100418050105 , training step: 3900
+Training accuracy: 78.77849994841638
+Testing accuracy: 78.64438254410399
+################################################################
+Build features for the poly task (train shape): (67851, 45)
+Build features for the poly task (test shape): (9693, 45)
+Build features for the poly-combination task: (67851, 45)
+Build features for the poly-combination task: (9693, 45)
+Loss (regularization) calculated at: 4.083316618727973 , training step: 0
+Loss (regularization) calculated at: 10.63333542928557 , training step: 100
+Loss (regularization) calculated at: 10.422437484026213 , training step: 200
+Loss (regularization) calculated at: 10.215528126236245 , training step: 300
+Loss (regularization) calculated at: 10.013769683209057 , training step: 400
+Loss (regularization) calculated at: 9.808122807036725 , training step: 500
+Loss (regularization) calculated at: 9.436429455356626 , training step: 600
+Loss (regularization) calculated at: 9.075257408791654 , training step: 700
+Loss (regularization) calculated at: 8.715235094996627 , training step: 800
+Loss (regularization) calculated at: 8.367152560804799 , training step: 900
+Loss (regularization) calculated at: 8.018719234113249 , training step: 1000
+Loss (regularization) calculated at: 7.493972214548478 , training step: 1100
+Loss (regularization) calculated at: 6.9638811641733245 , training step: 1200
+Loss (regularization) calculated at: 6.415006915406722 , training step: 1300
+Loss (regularization) calculated at: 5.791948151370911 , training step: 1400
+Loss (regularization) calculated at: 5.053409936324088 , training step: 1500
+Loss (regularization) calculated at: 4.404327106996628 , training step: 1600
+Loss (regularization) calculated at: 4.0255826119781135 , training step: 1700
+Loss (regularization) calculated at: 3.745679893910627 , training step: 1800
+Loss (regularization) calculated at: 3.4913503452180783 , training step: 1900
+Loss (regularization) calculated at: 3.2361979632217093 , training step: 2000
+Loss (regularization) calculated at: 2.90406963186896 , training step: 2100
+Loss (regularization) calculated at: 2.5530170894012683 , training step: 2200
+Loss (regularization) calculated at: 2.19636559131815 , training step: 2300
+Loss (regularization) calculated at: 1.855723600191038 , training step: 2400
+Loss (regularization) calculated at: 1.5333340235768638 , training step: 2500
+Loss (regularization) calculated at: 1.210140233598059 , training step: 2600
+Loss (regularization) calculated at: 1.002996465495794 , training step: 2700
+Loss (regularization) calculated at: 0.8903317697797256 , training step: 2800
+Loss (regularization) calculated at: 0.8225009642760501 , training step: 2900
+Loss (regularization) calculated at: 0.7718409578136075 , training step: 3000
+Loss (regularization) calculated at: 0.7211407571028704 , training step: 3100
+Loss (regularization) calculated at: 0.6749137208179513 , training step: 3200
+Loss (regularization) calculated at: 0.6322916405365261 , training step: 3300
+Loss (regularization) calculated at: 0.5934375966440106 , training step: 3400
+Loss (regularization) calculated at: 0.5582780833804758 , training step: 3500
+Loss (regularization) calculated at: 0.5240828726706597 , training step: 3600
+Loss (regularization) calculated at: 0.4972655273831676 , training step: 3700
+Loss (regularization) calculated at: 0.4779384151475976 , training step: 3800
+Loss (regularization) calculated at: 0.46601656843258193 , training step: 3900
+Training accuracy: 78.85808610042592
+Testing accuracy: 78.6237490972867
+################################################################
+Build features for the poly task (train shape): (67851, 45)
+Build features for the poly task (test shape): (9693, 45)
+Build features for the poly-combination task: (67851, 45)
+Build features for the poly-combination task: (9693, 45)
+Loss (regularization) calculated at: 4.903896944625914 , training step: 0
+Loss (regularization) calculated at: 7.832856491458919 , training step: 100
+Loss (regularization) calculated at: 7.747878016899287 , training step: 200
+Loss (regularization) calculated at: 7.661474899676955 , training step: 300
+Loss (regularization) calculated at: 7.574934868431798 , training step: 400
+Loss (regularization) calculated at: 7.488269251476503 , training step: 500
+Loss (regularization) calculated at: 7.326778926081865 , training step: 600
+Loss (regularization) calculated at: 7.16297744633738 , training step: 700
+Loss (regularization) calculated at: 6.9933536988786855 , training step: 800
+Loss (regularization) calculated at: 6.818306363075027 , training step: 900
+Loss (regularization) calculated at: 6.616750257925559 , training step: 1000
+Loss (regularization) calculated at: 6.289014751194115 , training step: 1100
+Loss (regularization) calculated at: 5.96521085190203 , training step: 1200
+Loss (regularization) calculated at: 5.659620866454098 , training step: 1300
+Loss (regularization) calculated at: 5.371417301118119 , training step: 1400
+Loss (regularization) calculated at: 5.073146937372572 , training step: 1500
+Loss (regularization) calculated at: 4.680865356100812 , training step: 1600
+Loss (regularization) calculated at: 4.094560431596523 , training step: 1700
+Loss (regularization) calculated at: 3.35195501946258 , training step: 1800
+Loss (regularization) calculated at: 2.56281149405648 , training step: 1900
+Loss (regularization) calculated at: 1.8107333090131459 , training step: 2000
+Loss (regularization) calculated at: 1.1064477660513534 , training step: 2100
+Loss (regularization) calculated at: 0.7189772390304464 , training step: 2200
+Loss (regularization) calculated at: 0.5751928578714349 , training step: 2300
+Loss (regularization) calculated at: 0.5158298490041568 , training step: 2400
+Loss (regularization) calculated at: 0.4884910037997959 , training step: 2500
+Loss (regularization) calculated at: 0.47362215504760125 , training step: 2600
+Loss (regularization) calculated at: 0.4675107897910853 , training step: 2700
+Loss (regularization) calculated at: 0.46518961949513193 , training step: 2800
+Loss (regularization) calculated at: 0.46427527136000535 , training step: 2900
+Loss (regularization) calculated at: 0.46385611262505955 , training step: 3000
+Loss (regularization) calculated at: 0.46360405695713325 , training step: 3100
+Loss (regularization) calculated at: 0.4634576640271974 , training step: 3200
+Loss (regularization) calculated at: 0.46335852652921383 , training step: 3300
+Loss (regularization) calculated at: 0.4632823409130501 , training step: 3400
+Loss (regularization) calculated at: 0.46321772133060013 , training step: 3500
+Loss (regularization) calculated at: 0.46356276213743525 , training step: 3600
+Loss (regularization) calculated at: 0.4631441077104663 , training step: 3700
+Loss (regularization) calculated at: 0.4630514595880574 , training step: 3800
+Loss (regularization) calculated at: 0.46295234392014006 , training step: 3900
+Training accuracy: 78.52352949845987
+Testing accuracy: 78.87135045909419
+################################################################
+Build features for the poly task (train shape): (67851, 45)
+Build features for the poly task (test shape): (9693, 45)
+Build features for the poly-combination task: (67851, 45)
+Build features for the poly-combination task: (9693, 45)
+Loss (regularization) calculated at: 3.6124231119211796 , training step: 0
+Loss (regularization) calculated at: 9.20139682195271 , training step: 100
+Loss (regularization) calculated at: 8.950783227385319 , training step: 200
+Loss (regularization) calculated at: 8.719787426444496 , training step: 300
+Loss (regularization) calculated at: 8.515899335118247 , training step: 400
+Loss (regularization) calculated at: 8.333882599781832 , training step: 500
+Loss (regularization) calculated at: 8.020779631314841 , training step: 600
+Loss (regularization) calculated at: 7.744359324883829 , training step: 700
+Loss (regularization) calculated at: 7.494268362745174 , training step: 800
+Loss (regularization) calculated at: 7.257501839802877 , training step: 900
+Loss (regularization) calculated at: 7.020543482096403 , training step: 1000
+Loss (regularization) calculated at: 6.677403899063581 , training step: 1100
+Loss (regularization) calculated at: 6.34297119652906 , training step: 1200
+Loss (regularization) calculated at: 5.999262172103189 , training step: 1300
+Loss (regularization) calculated at: 5.585450829092636 , training step: 1400
+Loss (regularization) calculated at: 5.031143955327062 , training step: 1500
+Loss (regularization) calculated at: 4.471918442625424 , training step: 1600
+Loss (regularization) calculated at: 4.048507483902214 , training step: 1700
+Loss (regularization) calculated at: 3.564123672585397 , training step: 1800
+Loss (regularization) calculated at: 2.9915960988723422 , training step: 1900
+Loss (regularization) calculated at: 2.3146354363246417 , training step: 2000
+Loss (regularization) calculated at: 1.4754001167294506 , training step: 2100
+Loss (regularization) calculated at: 0.9598914943240171 , training step: 2200
+Loss (regularization) calculated at: 0.7637459206596544 , training step: 2300
+Loss (regularization) calculated at: 0.6714004099681549 , training step: 2400
+Loss (regularization) calculated at: 0.6148180939637963 , training step: 2500
+Loss (regularization) calculated at: 0.5698334055471487 , training step: 2600
+Loss (regularization) calculated at: 0.5382644841461346 , training step: 2700
+Loss (regularization) calculated at: 0.5139914816162817 , training step: 2800
+Loss (regularization) calculated at: 0.4950940832482239 , training step: 2900
+Loss (regularization) calculated at: 0.4811201065550298 , training step: 3000
+Loss (regularization) calculated at: 0.47001119795874213 , training step: 3100
+Loss (regularization) calculated at: 0.46416417356457573 , training step: 3200
+Loss (regularization) calculated at: 0.46126643083257646 , training step: 3300
+Loss (regularization) calculated at: 0.4601552746653119 , training step: 3400
+Loss (regularization) calculated at: 0.45975293652438354 , training step: 3500
+Loss (regularization) calculated at: 0.4596001433319008 , training step: 3600
+Loss (regularization) calculated at: 0.45955265848725607 , training step: 3700
+Loss (regularization) calculated at: 0.4595364203564546 , training step: 3800
+Loss (regularization) calculated at: 0.4595301369974332 , training step: 3900
+Training accuracy: 78.69891379640683
+Testing accuracy: 78.91261735272877
+################################################################
+Build features for the poly task (train shape): (67851, 45)
+Build features for the poly task (test shape): (9693, 45)
+Build features for the poly-combination task: (67851, 45)
+Build features for the poly-combination task: (9693, 45)
+Loss (regularization) calculated at: 3.6378092104966706 , training step: 0
+Loss (regularization) calculated at: 8.017939961552033 , training step: 100
+Loss (regularization) calculated at: 7.9164713356904715 , training step: 200
+Loss (regularization) calculated at: 7.818988355482633 , training step: 300
+Loss (regularization) calculated at: 7.715542314540178 , training step: 400
+Loss (regularization) calculated at: 7.6090141839479974 , training step: 500
+Loss (regularization) calculated at: 7.395818404992572 , training step: 600
+Loss (regularization) calculated at: 7.1807019444781375 , training step: 700
+Loss (regularization) calculated at: 6.978247336156984 , training step: 800
+Loss (regularization) calculated at: 6.783616878578024 , training step: 900
+Loss (regularization) calculated at: 6.592473835878015 , training step: 1000
+Loss (regularization) calculated at: 6.329723137232963 , training step: 1100
+Loss (regularization) calculated at: 6.0670371321007535 , training step: 1200
+Loss (regularization) calculated at: 5.79796454135165 , training step: 1300
+Loss (regularization) calculated at: 5.516116568258596 , training step: 1400
+Loss (regularization) calculated at: 5.219437444081292 , training step: 1500
+Loss (regularization) calculated at: 4.872692563580122 , training step: 1600
+Loss (regularization) calculated at: 4.605911447492843 , training step: 1700
+Loss (regularization) calculated at: 4.397809442927472 , training step: 1800
+Loss (regularization) calculated at: 4.206714786998056 , training step: 1900
+Loss (regularization) calculated at: 4.014778977571948 , training step: 2000
+Loss (regularization) calculated at: 3.764377471533144 , training step: 2100
+Loss (regularization) calculated at: 3.4832382001980524 , training step: 2200
+Loss (regularization) calculated at: 3.14759420344041 , training step: 2300
+Loss (regularization) calculated at: 2.7308713984730066 , training step: 2400
+Loss (regularization) calculated at: 2.230084420589462 , training step: 2500
+Loss (regularization) calculated at: 1.6529316822449116 , training step: 2600
+Loss (regularization) calculated at: 1.2402317853950862 , training step: 2700
+Loss (regularization) calculated at: 0.9345441024013197 , training step: 2800
+Loss (regularization) calculated at: 0.7214773449284502 , training step: 2900
+Loss (regularization) calculated at: 0.5971539526401324 , training step: 3000
+Loss (regularization) calculated at: 0.5243892775705055 , training step: 3100
+Loss (regularization) calculated at: 0.4903439181558979 , training step: 3200
+Loss (regularization) calculated at: 0.47522003232309984 , training step: 3300
+Loss (regularization) calculated at: 0.4695958412580796 , training step: 3400
+Loss (regularization) calculated at: 0.4677859105974492 , training step: 3500
+Loss (regularization) calculated at: 0.46713160501891016 , training step: 3600
+Loss (regularization) calculated at: 0.466837051135133 , training step: 3700
+Loss (regularization) calculated at: 0.46661081574526875 , training step: 3800
+Loss (regularization) calculated at: 0.4663953690348012 , training step: 3900
+Training accuracy: 78.70628288455586
+Testing accuracy: 79.08800165067575
+################################################################
+Build features for the poly task (train shape): (67851, 45)
+Build features for the poly task (test shape): (9693, 45)
+Build features for the poly-combination task: (67851, 45)
+Build features for the poly-combination task: (9693, 45)
+Loss (regularization) calculated at: 4.503584617327841 , training step: 0
+Loss (regularization) calculated at: 7.451156741079848 , training step: 100
+Loss (regularization) calculated at: 7.33577403880886 , training step: 200
+Loss (regularization) calculated at: 7.225977008979112 , training step: 300
+Loss (regularization) calculated at: 7.120180572418478 , training step: 400
+Loss (regularization) calculated at: 7.015471927566436 , training step: 500
+Loss (regularization) calculated at: 6.830132875992712 , training step: 600
+Loss (regularization) calculated at: 6.650808900048898 , training step: 700
+Loss (regularization) calculated at: 6.474932456014256 , training step: 800
+Loss (regularization) calculated at: 6.30134900831604 , training step: 900
+Loss (regularization) calculated at: 6.131613803767181 , training step: 1000
+Loss (regularization) calculated at: 5.880499266209975 , training step: 1100
+Loss (regularization) calculated at: 5.617191953222221 , training step: 1200
+Loss (regularization) calculated at: 5.341202032374318 , training step: 1300
+Loss (regularization) calculated at: 5.052083829563143 , training step: 1400
+Loss (regularization) calculated at: 4.754060983929401 , training step: 1500
+Loss (regularization) calculated at: 4.413625893583654 , training step: 1600
+Loss (regularization) calculated at: 4.0617067619226574 , training step: 1700
+Loss (regularization) calculated at: 3.676070993680294 , training step: 1800
+Loss (regularization) calculated at: 3.2195160611840494 , training step: 1900
+Loss (regularization) calculated at: 2.6403502975118665 , training step: 2000
+###Loss (regularization) calculated at: 1.6820249538994385 , training step: 2100
+Loss (regularization) calculated at: 0.7274109788442452 , training step: 2200
+Loss (regularization) calculated at: 0.5252610225424227 , training step: 2300
+Loss (regularization) calculated at: 0.48160464356718335 , training step: 2400
+Loss (regularization) calculated at: 0.46647746622528047 , training step: 2500
+Loss (regularization) calculated at: 0.4599017269589308 , training step: 2600
+Loss (regularization) calculated at: 0.45776455459050286 , training step: 2700
+Loss (regularization) calculated at: 0.45705963738633754 , training step: 2800
+Loss (regularization) calculated at: 0.4568096961634441 , training step: 2900
+Loss (regularization) calculated at: 0.45670938812676715 , training step: 3000
+Loss (regularization) calculated at: 0.456656864383049 , training step: 3100
+Loss (regularization) calculated at: 0.45663015764407333 , training step: 3200
+Loss (regularization) calculated at: 0.45661359507245497 , training step: 3300
+Loss (regularization) calculated at: 0.4566013175114157 , training step: 3400
+Loss (regularization) calculated at: 0.4566576697266628 , training step: 3500
+Loss (regularization) calculated at: 0.45659633429852664 , training step: 3600
+Loss (regularization) calculated at: 0.45667175062372034 , training step: 3700
+Loss (regularization) calculated at: 0.4566315367269449 , training step: 3800
+Loss (regularization) calculated at: 0.45662732053443006 , training step: 3900
+Training accuracy: 79.02020603970465
+Testing accuracy: 78.04601258640255
+################################################################
+Build features for the poly task (train shape): (67851, 45)
+Build features for the poly task (test shape): (9693, 45)
+Build features for the poly-combination task: (67851, 45)
+Build features for the poly-combination task: (9693, 45)
+Loss (regularization) calculated at: 4.356881751789093 , training step: 0
+Loss (regularization) calculated at: 13.430683326617945 , training step: 100
+Loss (regularization) calculated at: 13.37820477617608 , training step: 200
+Loss (regularization) calculated at: 13.322658001220306 , training step: 300
+Loss (regularization) calculated at: 13.252486856519587 , training step: 400
+Loss (regularization) calculated at: 13.164513223222565 , training step: 500
+Loss (regularization) calculated at: 12.914753805647452 , training step: 600
+Loss (regularization) calculated at: 12.553550938867112 , training step: 700
+Loss (regularization) calculated at: 12.092950682576175 , training step: 800
+Loss (regularization) calculated at: 11.584031852431366 , training step: 900
+Loss (regularization) calculated at: 11.021198415893734 , training step: 1000
+Loss (regularization) calculated at: 10.168783499569713 , training step: 1100
+Loss (regularization) calculated at: 9.39542141618177 , training step: 1200
+Loss (regularization) calculated at: 8.68748247743223 , training step: 1300
+Loss (regularization) calculated at: 7.971345357131184 , training step: 1400
+Loss (regularization) calculated at: 7.258380284934902 , training step: 1500
+Loss (regularization) calculated at: 6.2990116032445895 , training step: 1600
+Loss (regularization) calculated at: 5.367610314020902 , training step: 1700
+Loss (regularization) calculated at: 4.660824551785722 , training step: 1800
+Loss (regularization) calculated at: 4.1086047703734945 , training step: 1900
+Loss (regularization) calculated at: 3.5559855030520584 , training step: 2000
+Loss (regularization) calculated at: 2.871357842573942 , training step: 2100
+Loss (regularization) calculated at: 2.2656378388189977 , training step: 2200
+Loss (regularization) calculated at: 1.6977112972337098 , training step: 2300
+Loss (regularization) calculated at: 1.2100606733601105 , training step: 2400
+Loss (regularization) calculated at: 0.8629604878183824 , training step: 2500
+Loss (regularization) calculated at: 0.6489544087679292 , training step: 2600
+Loss (regularization) calculated at: 0.5554152924639555 , training step: 2700
+Loss (regularization) calculated at: 0.5020411994890984 , training step: 2800
+Loss (regularization) calculated at: 0.47319186244031824 , training step: 2900
+Loss (regularization) calculated at: 0.4629918920002065 , training step: 3000
+Loss (regularization) calculated at: 0.46078910652182353 , training step: 3100
+Loss (regularization) calculated at: 0.4601911027897208 , training step: 3200
+Loss (regularization) calculated at: 0.4598329349669005 , training step: 3300
+Loss (regularization) calculated at: 0.45961481239028573 , training step: 3400
+Loss (regularization) calculated at: 0.4594789195379776 , training step: 3500
+Loss (regularization) calculated at: 0.45938351213823864 , training step: 3600
+Loss (regularization) calculated at: 0.45931484034742454 , training step: 3700
+Loss (regularization) calculated at: 0.459270624229749 , training step: 3800
+Loss (regularization) calculated at: 0.4592398069033371 , training step: 3900
+Training accuracy: 78.7563926839693
+Testing accuracy: 79.05705148044981
+The Average loss of train set: 0.4607595058702128
+The Average accuarcy of test set in category 1 is 78.69983493242546.
+Training for CATEGORY DONE: ########################################################
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

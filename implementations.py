@@ -362,14 +362,29 @@ def reg_logistic_regression(y, tx, lambda_, max_iters, gamma, initial_w):
         
     output: weight, loss
     """
+    m = np.zeros(tx.shape[1])
+    v = np.zeros(tx.shape[1])
+
+    beta_one = 0.9
+    beta_two = 0.999
+    epsilon = 1e-8
+
     for n_iter in range(max_iters):
-        h = sigmoid(np.dot(initial_w, tx.T))
+
+        z = np.dot(initial_w, tx.T)
+        h = sigmoid(z)
         reg_constant = lambda_ / y.shape[0]
         gradient = np.dot(tx.T, (h - y))
         gradient /= tx.shape[0]
         gradient += (reg_constant * initial_w)
 
-        initial_w -= gamma * gradient
+        # Adam Momentum Optimizer
+        m = (beta_one * m) + ((1 - beta_one) * gradient)
+        v = (beta_two * v) + ((1 - beta_two) * (gradient * gradient))
+        m_cap = m / ((1 - (beta_one ** n_iter)) + 1e-8)
+        v_cap = v / ((1 - (beta_two ** n_iter)) + 1e-8)
+        initial_w = initial_w - (gamma * m_cap)/(np.sqrt(v_cap) + epsilon)
+        
         loss = calculate_loss_logistic(
             h, y, initial_w, lambda_=lambda_, regularize=True
         )
@@ -379,6 +394,7 @@ def reg_logistic_regression(y, tx, lambda_, max_iters, gamma, initial_w):
                      loss, n_iter
                 )
             )
+
     return initial_w, loss
 
 def calculate_loss_logistic(h, y, w, lambda_=0, regularize=False):
