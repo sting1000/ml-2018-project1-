@@ -27,8 +27,8 @@ def run_logistic_regression(x_train, y_train, x_test, y_test, initial_w, regular
 c_parameters = dict()
 ##------------------poly_deg----comb_size----K_fold----step_size----random_seed----iteration----
 c_parameters[0] = [   2,          1,         8,          0.1,           1,             2500, False] # 83.75% (mean), 84.35% (max)
-c_parameters[1] = [   2,          2,         8,          0.1,           1,             3500, True]
-c_parameters[2] = [   3,          2,         10,         0.1,           1,             3500, True]
+c_parameters[1] = [   8,          1,         8,          0.1,           1,             3500, True]
+c_parameters[2] = [   2,          1,         10,         0.1,           1,             3500, True]
 c_parameters[3] = [   4,          2,         10,         0.1,           1,             3500, True]
 
 ## Load data ##
@@ -57,7 +57,6 @@ total_pred_num = 0
 category_weights = []
 
 lambda_ = 5
-
 for cate_num in [0]:
 
     print('Training the model for category: {}'.format(cate_num))
@@ -74,12 +73,7 @@ for cate_num in [0]:
 #     print('The size of training data: {}\nThe size of training data: {}'.format( x_train.shape, x_test.shape))
 #     run_logistic_regression(x_train, y_train, x_test, y_test)
 # else:
-    ## Feature Engineering ##
-    x_ = build_poly(x_cate[cate_num], poly_degree)
-    print('Build features for the poly task: {}'.format(x_.shape))
 
-    x_ = build_combination(x_, comb_size)
-    print('Build features for the poly-combination task: {}'.format(x_.shape))
 
     # cross_val_losses = []
     cross_val_weights = []
@@ -89,7 +83,7 @@ for cate_num in [0]:
     if split_data:
         x_train, x_test, y_train, y_test = split_data(x_, y_cate[cate_num], 0.9)
     else:
-        x_train, y_train = x_, y_cate[cate_num]
+        x_train, y_train = x_cate[cate_num], y_cate[cate_num]
 
 
     k_indices = build_k_indices(y_train, k_fold, seed)
@@ -97,11 +91,25 @@ for cate_num in [0]:
     right_pred_fold = 0
 
     for k in range(k_fold):
-        initial_w = np.random.randn(x_train.shape[1])
 
         # Cross validated training set
         print('################################################################')
         x_t, y_t, x_te, y_te = cross_validation(y_train, x_train, k_indices, k)
+        # Standardize it
+        x_t, x_te = standardize(x_t, x_te)
+
+        # Do feature engineering
+        x_t = build_poly(x_t, poly_degree)
+        print('Build features for the poly task (train shape): {}'.format(x_t.shape))
+        x_te = build_poly(x_te, poly_degree)
+        print('Build features for the poly task (test shape): {}'.format(x_te.shape))
+
+        x_t = build_combination(x_t, comb_size)
+        print('Build features for the poly-combination task: {}'.format(x_t.shape))
+        x_te = build_combination(x_te, comb_size)
+        print('Build features for the poly-combination task: {}'.format(x_te.shape))
+
+        initial_w = np.random.randn(x_t.shape[1])
 
         # Pass in cross validated
         # w, loss = logistic_regression(y_t, x_t, max_iters, gamma, initial_w, do_decay=do_decay)
@@ -132,4 +140,4 @@ for cate_num in [0]:
     # total_correct_testing_labels = print_accuracy(testing_predict_labels, y_test, train=False)
     # print('The total accuracy of testing data: {}'.format(100 * (total_correct_testing_labels / len(y_test))))
 
-    print('################################################################')
+    print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')

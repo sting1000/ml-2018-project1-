@@ -280,7 +280,7 @@ def cross_validation(y, x, k_indices, k):
 
     return np.array(x_train), np.array(y_train), x_test, y_test
 
-def standardize(x):
+def standardize(train, test):
     """
         Standardize the original data set.
         Multiple columns represent features so need to take mean of each standardized feature
@@ -290,11 +290,15 @@ def standardize(x):
         output: a tuple of x, mean_x, std_x
         
     """
-    mean_x = np.mean(x, axis=0)
-    x = x - mean_x
-    std_x = np.std(x, axis=0)
-    x = x / std_x
-    return x, mean_x, std_x
+    mean_train = np.mean(train, axis=0)
+    x = train - mean_train
+    std_train = np.std(train, axis=0)
+    x = x / std_train
+
+    y = test - mean_train
+    y = y / std_train
+
+    return x, y
 
 
 def build_model_data(x, y):

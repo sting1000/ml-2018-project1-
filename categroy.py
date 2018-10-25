@@ -38,5 +38,5 @@ def load_categrized_data(data_name):
                 x_cate[it] = np.delete(x_cate[it], column, 1)
                 column -= 1
             column+= 1
-        x_cate[it], _, _ = standardize(x_cate[it])
+        #x_cate[it], _, _ = standardize(x_cate[it])
     return x_cate, y_cate, ids_cate, len(y)

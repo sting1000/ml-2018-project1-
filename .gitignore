@@ -2,3 +2,5 @@ test.csv
 __pycache__/
 .ipynb_checkpoints/
 .DS_Store
+*.pyc
+output.txt
