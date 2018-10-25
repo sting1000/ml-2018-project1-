@@ -26,10 +26,10 @@ def run_logistic_regression(x_train, y_train, x_test, y_test, initial_w, regular
 
 c_parameters = dict()
 ##------------------poly_deg----comb_size----K_fold----step_size----random_seed----iteration----
-c_parameters[0] = [   2,          1,         8,         0.1,          1,              2500, False] # 83.7%
-c_parameters[1] = [   2,          2,         8,         0.1,          1,             3500, True]
-c_parameters[2] = [   3,          2,         10,         0.1,          1,             3500, True]
-c_parameters[3] = [   4,          2,         10,         0.1,          1,             3500, True]
+c_parameters[0] = [   2,          1,         8,          0.1,           1,             2500, False] # 83.75% (mean), 84.35% (max)
+c_parameters[1] = [   2,          2,         8,          0.1,           1,             3500, True]
+c_parameters[2] = [   3,          2,         10,         0.1,           1,             3500, True]
+c_parameters[3] = [   4,          2,         10,         0.1,           1,             3500, True]
 
 ## Load data ##
 x_cate, y_cate, ids_cate, total_num = load_categrized_data("train.csv")
@@ -56,7 +56,9 @@ right_pred_num = 0
 total_pred_num = 0
 category_weights = []
 
-for cate_num in [1]:
+lambda_ = 5
+
+for cate_num in [0]:
 
     print('Training the model for category: {}'.format(cate_num))
     
@@ -98,14 +100,21 @@ for cate_num in [1]:
         initial_w = np.random.randn(x_train.shape[1])
 
         # Cross validated training set
+        print('################################################################')
         x_t, y_t, x_te, y_te = cross_validation(y_train, x_train, k_indices, k)
 
         # Pass in cross validated
-        w, loss = logistic_regression(y_t, x_t, max_iters, gamma, initial_w, do_decay=do_decay)
+        # w, loss = logistic_regression(y_t, x_t, max_iters, gamma, initial_w, do_decay=do_decay)
+        w, loss = reg_logistic_regression(y_t, x_t, lambda_, max_iters, gamma, initial_w)
         loss_tr_sum += loss
 
+        # Get training accuracy
+        training_predict_labels = calculate_predicted_labels(x_t, w, val=0.5, do_sigmoid=True)
+        print_accuracy(training_predict_labels, y_t, train=True)
+
+        # Get testing accuracy
         testing_predict_labels = calculate_predicted_labels(x_te, w, val=0.5, do_sigmoid=True)
-        right_pred_fold += print_accuracy(testing_predict_labels, y_te, train=True)
+        right_pred_fold += print_accuracy(testing_predict_labels, y_te, train=False)
 
         cross_val_weights.append(w)
 

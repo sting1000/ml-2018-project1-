@@ -369,11 +369,12 @@ def reg_logistic_regression(y, tx, lambda_, max_iters, gamma, initial_w):
         loss = calculate_loss_logistic(
             h, y, initial_w, lambda_=lambda_, regularize=True
         )
-        print(
-            'Loss (regularization) calculated at: {} , training step: {}'.format(
-                 loss, n_iter
+        if (n_iter % 100==0):
+            print(
+                'Loss (regularization) calculated at: {} , training step: {}'.format(
+                     loss, n_iter
+                )
             )
-        )
     return initial_w, loss
 
 def calculate_loss_logistic(h, y, w, lambda_=0, regularize=False):
@@ -382,13 +383,13 @@ def calculate_loss_logistic(h, y, w, lambda_=0, regularize=False):
     accumulated over all data points.
     """
     # loss = np.log(1 + np.exp(-y * np.dot(w, tx.T))).mean()
-    epsilon = 0.000001
+    epsilon = 1e-8
     loss = (-y * np.log(h + epsilon) - (1 - y) * np.log((1 - h) + epsilon)).mean()
     if not regularize:
         return loss
     else: # lambda_/ 2 * number of features by the sum of dot product
         reg_constant = (lambda_ / ((2 * y.shape[0])))
-        return loss + (reg_constant * np.linalg.norm(w))
+        return loss + (reg_constant * np.dot(w, w))
 
 def replace_nan(column, missing_value, strategy='mean'):
     """
