@@ -28,7 +28,7 @@ c_parameters = dict()
 ##------------------poly_deg----comb_size----K_fold----step_size----random_seed----iteration----
 c_parameters[0] = [   2,          1,         8,          0.001,           1,             4000, False] # 83 - 84%
 c_parameters[1] = [   2,          2,         8,          0.001,           1,             8000, False] # 80 - 81%
-c_parameters[2] = [   2,          2,         10,         0.0001,          1,            80000, False]
+c_parameters[2] = [   2,          2,         10,         0.0001,          1,            45000, False] # Reduced the number of iterations from 80k to 45k
 c_parameters[3] = [   2,          1,         10,         0.001,           1,             4000, False]
 
 ## Load data ##
