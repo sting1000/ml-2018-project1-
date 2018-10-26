@@ -459,12 +459,14 @@ def build_log(x):
         
         Output:
         x_: new matrix with log columns
-        """
+    """
     x_ = x
-    x_ = np.c_[x_, np.log(x)]
+    for i in range(x.shape[1]):
+        if (x[:, i]>0).all() :
+            x_ = np.c_[x_, np.log(x[:, i])]
     return x_
 
-def build_root(x):
+def build_sqrt(x):
     """
         to generate new feature columns log x
         
@@ -475,5 +477,7 @@ def build_root(x):
         x_: new matrix with log columns
         """
     x_ = x
-    x_ = np.c_[x_, np.sqrt(x)]
+    for i in range(x.shape[1]):
+        if (x[:, i]>0).all() :
+            x_ = np.c_[x_, np.sqrt(x[:, i])]
     return x_

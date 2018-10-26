@@ -26,7 +26,7 @@ def run_logistic_regression(x_train, y_train, x_test, y_test, initial_w, regular
 
 c_parameters = dict()
 ##------------------poly_deg----comb_size----K_fold----step_size----random_seed----iteration----
-c_parameters[0] = [   2,          1,         8,          0.001,           1,             4000, False] # 83 - 84%
+c_parameters[0] = [   2,          1,         8,          0.001,           1,             8000, False] # 84.4%
 c_parameters[1] = [   2,          2,         8,          0.001,           1,             8000, False] # 80 - 81%
 c_parameters[2] = [   2,          2,         10,         0.0001,          1,            45000, False] # Reduced the number of iterations from 80k to 45k
 c_parameters[3] = [   2,          2,         10,         0.001,           1,            10000, False]
@@ -97,9 +97,7 @@ for cate_num in range(4):
         # Cross validated training set
     print('################################################################')
     # x_t, y_t, x_te, y_te = cross_validation(y_train, x_train, k_indices, k)
-    # Standardize it
-    x_t, x_te = standardize(x_t, x_te)
-
+    
     # Do feature engineering
 
     x_t = build_combination(x_t, comb_size)
@@ -107,10 +105,33 @@ for cate_num in range(4):
     x_te = build_combination(x_te, comb_size)
     print('Build features for the poly-combination task: {}'.format(x_te.shape))
 
+    x_t = build_sqrt(x_t)
+    print('Build features for the sqrt task: {}'.format(x_t.shape))
+    x_te = build_sqrt(x_te)
+    print('Build features for the sqrt task: {}'.format(x_te.shape))
+
+    x_t = build_log(x_t)
+    print('Build features for the log task: {}'.format(x_t.shape))
+    x_te = build_log(x_te)
+    print('Build features for the log task: {}'.format(x_te.shape))
+
+
+
+    # Standardize it
+    x_t, x_te = standardize(x_t, x_te)
+
+    
     x_t = build_poly(x_t, poly_degree)
     print('Build features for the poly task (train shape): {}'.format(x_t.shape))
     x_te = build_poly(x_te, poly_degree)
     print('Build features for the poly task (test shape): {}'.format(x_te.shape))
+
+    
+
+
+    
+
+    
 
     initial_w = np.random.randn(x_t.shape[1])
     
@@ -167,5 +188,5 @@ for cate_num in range(4):
     result_ids = np.r_[result_ids, ids_cate_rslt[cate_num]]
 create_csv_submission(result_ids, result_y, 'test_predicted.csv')
 print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-sort_csv_byColumn('test_predicted.csv', 'test_predicted_ordered.csv', 'Id')
+sort_csv_byColumn('test_predicted.csv', 'test_predicted_ordered.csv', 'Id') ##pd.read_csv('test_predicted.csv').sort_values(['Id']).to_csv(test_predicted_ordered.csv)
 
