@@ -23,6 +23,15 @@ def load_csv_data(data_path, sub_sample=False):
 
     return yb, input_data, ids
 
+def sort_csv_byColumn(in_file, out_file, column_name):
+    with open(in_file, 'rb') as f:
+        reader = csv.reader(f, delimiter=',')
+        fieldnames = next(reader)
+        reader = csv.DictReader(f, fieldnames=fieldnames, delimiter=',')
+        sorted_list = sorted(reader, key=lambda row: row[column_name], reverse=True)
+        # print sorted_list
+        csv_converter.nestedlist2csv(sorted_list, out_file)
+
 
 def predict_labels(weights, data):
     """Generates class predictions given weights, and a test data matrix"""
@@ -31,7 +40,7 @@ def predict_labels(weights, data):
     y_pred[np.where(y_pred > 0)] = 1
     
     return y_pred
-
+    
 
 def create_csv_submission(ids, y_pred, name):
     """
