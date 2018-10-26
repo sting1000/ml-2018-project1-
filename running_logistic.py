@@ -27,9 +27,9 @@ def run_logistic_regression(x_train, y_train, x_test, y_test, initial_w, regular
 c_parameters = dict()
 ##------------------poly_deg----comb_size----K_fold----step_size----random_seed----iteration----
 c_parameters[0] = [   2,          1,         8,          0.001,           1,             4000, False] # 83 - 84%
-c_parameters[1] = [   2,          2,         8,          0.001,           1,              4500, False]
-c_parameters[2] = [   2,          1,         10,         0.001,           1,             3500, False]
-c_parameters[3] = [   4,          2,         10,         0.001,           1,             3500, False]
+c_parameters[1] = [   2,          2,         8,          0.001,           1,             8000, False] # 80 - 81%
+c_parameters[2] = [   2,          2,         10,         0.0001,          1,            80000, False]
+c_parameters[3] = [   2,          1,         10,         0.001,           1,             4000, False]
 
 ## Load data ##
 x_cate, y_cate, ids_cate, total_num = load_categrized_data("train.csv")
@@ -57,7 +57,7 @@ total_pred_num = 0
 category_weights = []
 
 lambda_ = 5
-for cate_num in [1]:
+for cate_num in [2]:
 
     print('Training the model for category: {}'.format(cate_num))
     
@@ -100,15 +100,16 @@ for cate_num in [1]:
         x_t, x_te = standardize(x_t, x_te)
 
         # Do feature engineering
-        x_t = build_poly(x_t, poly_degree)
-        print('Build features for the poly task (train shape): {}'.format(x_t.shape))
-        x_te = build_poly(x_te, poly_degree)
-        print('Build features for the poly task (test shape): {}'.format(x_te.shape))
 
         x_t = build_combination(x_t, comb_size)
         print('Build features for the poly-combination task: {}'.format(x_t.shape))
         x_te = build_combination(x_te, comb_size)
         print('Build features for the poly-combination task: {}'.format(x_te.shape))
+
+        x_t = build_poly(x_t, poly_degree)
+        print('Build features for the poly task (train shape): {}'.format(x_t.shape))
+        x_te = build_poly(x_te, poly_degree)
+        print('Build features for the poly task (test shape): {}'.format(x_te.shape))
 
         initial_w = np.random.randn(x_t.shape[1])
 

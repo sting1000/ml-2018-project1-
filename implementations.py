@@ -369,10 +369,7 @@ def reg_logistic_regression(y, tx, lambda_, max_iters, gamma, initial_w):
     beta_two = 0.999
     epsilon = 1e-8
 
-    prev_loss = 999
-    n_iter = 1
-
-    while True:
+    for n_iter in range(max_iters):
 
         z = np.dot(initial_w, tx.T)
         h = sigmoid(z)
@@ -384,8 +381,8 @@ def reg_logistic_regression(y, tx, lambda_, max_iters, gamma, initial_w):
         # Adam Momentum Optimizer
         m = (beta_one * m) + ((1 - beta_one) * gradient)
         v = (beta_two * v) + ((1 - beta_two) * (gradient * gradient))
-        m_cap = m / ((1 - (beta_one ** n_iter)) + 1e-8)
-        v_cap = v / ((1 - (beta_two ** n_iter)) + 1e-8)
+        m_cap = m # / ((1 - (beta_one ** n_iter)) + 1e-8)
+        v_cap = v # / ((1 - (beta_two ** n_iter)) + 1e-8)
         initial_w = initial_w - (gamma * m_cap)/(np.sqrt(v_cap) + epsilon)
         
         loss = calculate_loss_logistic(
@@ -397,12 +394,6 @@ def reg_logistic_regression(y, tx, lambda_, max_iters, gamma, initial_w):
                      loss, n_iter
                 )
             )
-
-        if prev_loss - loss < 0.00001:
-            break
-
-        prev_loss = loss
-        n_iter += 1
 
     return initial_w, loss
 
@@ -471,4 +462,18 @@ def build_log(x):
         """
     x_ = x
     x_ = np.c_[x_, np.log(x)]
+    return x_
+
+def build_root(x):
+    """
+        to generate new feature columns log x
+        
+        Input:
+        x: the feature data set
+        
+        Output:
+        x_: new matrix with log columns
+        """
+    x_ = x
+    x_ = np.c_[x_, np.sqrt(x)]
     return x_
