@@ -83,10 +83,22 @@ category_weights = []
 
 lambda_ = 5 # Regularization parameter
 
+
 ## Doing Grid Search ##
+
+## In this we found out different hyperparameters for each of the categories
+## We found out that below hyperparameters which do not overfit and provide us with high amount of accuracy
+## Category 0 - 2 (polynominal degree), 1 (combination of size), 8 (k-fold), 0.001 (learning rate), 8000 (iterations)
+## Category 1 - 2 (polynominal degree), 2 (combination of size), 8 (k-fold), 0.001 (learning rate), 8000 (iterations)
+## Category 2 - 2 (polynominal degree), 2 (combination of size), 10 (k-fold), 0.0001 (learning rate), 45000 (iterations)
+## Category 3 - 2 (polynominal degree), 2 (combination of size), 10 (k-fold), 0.001 (learning rate), 10000 (iterations)
+
+## We are not doing grid search on higher degree of polynomials since it takes longer to train and the change in
+## accuracy is minimal. Even with more features, the loss increases substantially due to the curse of dimensionality.
+
 for i in range(4):
     for poly_degree in [1,2,3]:
         for comb_size in [1,2]:
             for gamma in [0.01, 0.001, 0.0001]:
-                for max_iters in [4000,5000,8000,45000]:
+                for max_iters in [4000,5000,8000,15000,20000,45000]:
                     run_reg_log_regression(i, poly_degree, comb_size, 10, gamma, 1, max_iters, False)
