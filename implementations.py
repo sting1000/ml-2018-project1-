@@ -3,6 +3,15 @@ import itertools as it
 import matplotlib.pyplot as plt 
 
 def calculate_predicted_labels(x, w, val=0, do_sigmoid=False):
+    """
+        Calculate predict labels by passing in the weights calculated by the model.
+
+        :param: x: input data
+        :param: w: weights calculated by the model
+        :param: val: threshold at which you distinguish between the two labels
+        :param: do_sigmoid: boolean to pass the dot product through sigmoid or not
+
+    """
     if not do_sigmoid:
         y_pred = x.dot(w)
     else:
@@ -14,6 +23,13 @@ def calculate_predicted_labels(x, w, val=0, do_sigmoid=False):
     return y_pred
 
 def print_accuracy(predict_labels, y, train=True):
+    """
+        Print the accuracy by calculating the number of labels which are correct.
+
+        :param: predict_labels: labels which have been predicted by the model
+        :param: y: actual labels
+        :param: train: boolean to do it on training data or not
+    """
     y[y == 0] = -1
     total_correct_labels = np.sum(predict_labels == y)
 
@@ -22,16 +38,6 @@ def print_accuracy(predict_labels, y, train=True):
     else:
         print('Testing accuracy: {}'.format((total_correct_labels / len(y)) * 100))
     return total_correct_labels
-
-def predic(n):
-    """
-        use tanh to get the label(-1/1) of predic result n
-        
-    """
-    n = np.tanh(n)
-    n[n>=0] = 1
-    n[n<0] = -1
-    return n
 
 def build_poly(x, degree):
     """
@@ -56,15 +62,11 @@ def build_poly(x, degree):
 
 def batch_iter(y, tx, batch_size, num_batches=1, shuffle=True):
     """
-    Generate a minibatch iterator for a dataset.
+        Generate a minibatch iterator for a dataset.
     
-    Takes as input two iterables (here the output desired values 'y' and the input data 'tx')
-    Outputs an iterator which gives mini-batches of `batch_size` matching elements from `y` and `tx`.
-    Data can be randomly shuffled to avoid ordering in the original data messing with the randomness of the minibatches.
-    
-    Example of use :
-    for minibatch_y, minibatch_tx in batch_iter(y, tx, 32):
-        <DO-SOMETHING>
+        Takes as input two iterables (here the output desired values 'y' and the input data 'tx')
+        Outputs an iterator which gives mini-batches of `batch_size` matching elements from `y` and `tx`.
+        Data can be randomly shuffled to avoid ordering in the original data messing with the randomness of the minibatches.
     """
     data_size = len(y)
 
@@ -85,6 +87,8 @@ def sigmoid(t):
     """
         Compute the sigmoid funtion to implement logistic regression
         Using stable version of the sigmoid function as in to avoid the overflow.
+
+        :param: t: vector which needs to be passed through the sigmoid function
     """
     return (1 / (1 + np.exp(-t)))
 
@@ -156,8 +160,6 @@ def least_squares_GD(y, tx, initial_w, max_iters, gamma, loss_function='mse'):
         # store w and loss
         ws.append(w)
         losses.append(loss)
-        
-        #print(ws, losses)
         
     return ws[-1], losses[-1]
 
@@ -255,7 +257,11 @@ def split_data(x, y, ratio, seed=1):
 
 def build_k_indices(y, k_fold, seed):
     """
-    Build indices for k fold cross validation.
+        Build indices for k fold cross validation.
+
+        :param: y: test data
+        :param: k_fold: number of folds for cross validation
+        :param: seed: seed for random number generator
     """
     np.random.seed(seed)
 
@@ -267,7 +273,12 @@ def build_k_indices(y, k_fold, seed):
 
 def cross_validation(y, x, k_indices, k):
     """
-    Cross validation for training and testing data.
+        Cross validation for training and testing data.
+
+        :param: y: test data
+        :param: x: training data
+        :param: k_indices: random shuffled indices for each fold
+        :param: k_: number of folds for cross validation
     """
     x_train = []
     y_train = []
@@ -285,7 +296,8 @@ def standardize(train, test):
         Standardize the original data set.
         Multiple columns represent features so need to take mean of each standardized feature
         
-        :param: x: input data which needs to be standardized
+        :param: train: input data which needs to be standardized
+        :param: test: testing data which needs to be standardized
         
         output: a tuple of x, mean_x, std_x
         
@@ -316,15 +328,15 @@ def build_model_data(x, y):
 
 def logistic_regression(y, tx, max_iters, gamma, initial_w, do_decay=False):
     """
-    Implementing logistic regression algorithm.
+        Implementing logistic regression algorithm.
 
 
-    :param: tx: input data which is standardized and cleaned.
-    :param: y: labels for the dataset
-    :param: max_iters: times which the algorithm needs to be run.
-    :param: gamma: the learning rate value.
+        :param: tx: input data which is standardized and cleaned.
+        :param: y: labels for the dataset
+        :param: max_iters: times which the algorithm needs to be run.
+        :param: gamma: the learning rate value.
         
-    output: weight, loss
+        output: weight, loss
     """
 
     for n_iter in range(max_iters):
@@ -352,15 +364,15 @@ def logistic_regression(y, tx, max_iters, gamma, initial_w, do_decay=False):
         
 def reg_logistic_regression(y, tx, lambda_, max_iters, gamma, initial_w):
     """
-    Implementing logistic regression algorithm.
+        Implementing logistic regression algorithm.
 
 
-    :param: tx: input data which is standardized and cleaned.
-    :param: y: labels for the dataset
-    :param: max_iters: times which the algorithm needs to be run.
-    :param: gamma: the learning rate value.
+        :param: tx: input data which is standardized and cleaned.
+        :param: y: labels for the dataset
+        :param: max_iters: times which the algorithm needs to be run.
+        :param: gamma: the learning rate value.
         
-    output: weight, loss
+        output: weight, loss
     """
     m = np.zeros(tx.shape[1])
     v = np.zeros(tx.shape[1])
@@ -399,8 +411,16 @@ def reg_logistic_regression(y, tx, lambda_, max_iters, gamma, initial_w):
 
 def calculate_loss_logistic(h, y, w, lambda_=0, regularize=False):
     """
-    Given the actual label y and calculated hypothesis h returns the loss
-    accumulated over all data points.
+        Given the actual label y and calculated hypothesis h returns the loss
+        accumulated over all data points.
+
+        :param: h: hypothesis as defined in the logistic regression method
+        :param: y: actual testing prediction
+        :param: w: weights calculated
+        :param: lambda_: regularization parameter
+        :param: regularize: to do regularization or not on logistic regression
+
+        output: loss of the model
     """
     # loss = np.log(1 + np.exp(-y * np.dot(w, tx.T))).mean()
     epsilon = 1e-8

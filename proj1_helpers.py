@@ -40,7 +40,7 @@ def predict_labels(weights, data):
     y_pred[np.where(y_pred > 0)] = 1
     
     return y_pred
-    
+
 
 def create_csv_submission(ids, y_pred, name):
     """
@@ -53,5 +53,7 @@ def create_csv_submission(ids, y_pred, name):
         fieldnames = ['Id', 'Prediction']
         writer = csv.DictWriter(csvfile, delimiter=",", fieldnames=fieldnames)
         writer.writeheader()
-        for r1, r2 in zip(ids, y_pred):
+        res = np.c_[ids, y_pred]
+        res.sort(axis = 0)
+        for r1, r2 in zip(res[:,0], res[:,1]):
             writer.writerow({'Id':int(r1),'Prediction':int(r2)})

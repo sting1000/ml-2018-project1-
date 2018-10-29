@@ -85,17 +85,9 @@ for cate_num in range(4):
     category_weights[cate_num] = w
 
     print("The Average loss of train set: {}".format(loss_sum))
-    # print("The Average accuarcy of test set in category {} is {}.".format(
-    #     cate_num, 100 * right_pred_fold / (len(y_te)), '%')
-    # )
-    # print("The BEST accuarcy of test set in category {} is {}.".format(
-    #     cate_num, 100 * best_accur/ len(y_te), '%')
-    # )
     print("Shape of weight: ", category_weights[cate_num].shape)
     print('Training for CATEGORY DONE: ########################################################')
-    # mean_of_weights = np.mean(cross_val_weights, axis=0)
-    # Add the weight for this category
-    # category_weights.append(mean_of_weights)
+
 
 # print weights to file
 f = open("category_weights.txt", 'w+')    
@@ -110,5 +102,3 @@ for cate_num in range(4):
     result_ids = np.r_[result_ids, ids_cate_rslt[cate_num]]
 create_csv_submission(result_ids, result_y, 'test_predicted.csv')
 print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-sort_csv_byColumn('test_predicted.csv', 'test_predicted_ordered.csv', 'Id') ##pd.read_csv('test_predicted.csv').sort_values(['Id']).to_csv(test_predicted_ordered.csv)
-
