@@ -1,6 +1,6 @@
+from categroy import *
 from proj1_helpers import *
 from implementations import *
-from categroy import *
 
 
 def run_reg_log_regression(cate_num, poly_degree, comb_size, k_fold, gamma, seed, max_iters, do_decay):
@@ -89,4 +89,4 @@ for i in range(4):
         for comb_size in [1,2]:
             for gamma in [0.01, 0.001, 0.0001]:
                 for max_iters in [4000,5000,8000,45000]:
-                    run_reg_log_regression(cate_num, poly_degree, comb_size, k_fold, gamma, 1, max_iters, False)
+                    run_reg_log_regression(i, poly_degree, comb_size, 10, gamma, 1, max_iters, False)
