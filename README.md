@@ -12,4 +12,4 @@ In this project, we implemented different kind of regression techniques to imple
 - **categroy.py:** script which given the training dataset divides into different categories based on the `JET numbers` and return a categorized dataset.
 
 
-To run any of the scripts such as `running_grid_search.py` or `run_prediction.py`, we should just call it in the terminal with `python <name-of-the-script>`.
+To run any of the scripts such as `running_grid_search.py` or `run.py`, we should just call it in the terminal with `python <name-of-the-script>`.
